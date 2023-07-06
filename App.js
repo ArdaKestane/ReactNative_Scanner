@@ -71,41 +71,37 @@ const App = () => {
       const extractedText = await recognizeText(image);
       const extractedTextString = String(extractedText);
 
-      if (!extractedTextString) {
-        console.log('Error: Extracted text is null or empty.');
-        return;
-      }
-
-      //TODO: EXCLUDE THE CREDIT CARD INFORMATION
+      // TODO: EXCLUDE THE CREDIT CARD INFORMATION
 
       const lastAsteriskIndex = extractedTextString.lastIndexOf('*');
+
+      let amount = null;
 
       if (lastAsteriskIndex !== -1) {
         const amountText = extractedTextString
           .substring(lastAsteriskIndex + 1)
           .trim();
 
-        const amount = parseFloat(amountText.replace(/,/g, '.'));
+        amount = parseFloat(amountText.replace(/,/g, '.'));
 
-        if (!isNaN(amount)) {
-          const newComponent = {
-            image,
-            date: new Date().toLocaleDateString(),
-            amount,
-            extractedText,
-          };
-          setComponentsData(prevData => [...prevData, newComponent]);
-        } else {
+        if (isNaN(amount)) {
+          amount = null;
           console.log('Error: Invalid amount format');
         }
       } else {
         console.log('Error: Asterisk (*) not found');
       }
 
+      const newComponent = {
+        image,
+        date: new Date().toLocaleDateString(),
+        amount,
+        extractedText,
+      };
+
+      setComponentsData(prevData => [...prevData, newComponent]);
+
       setScannedImage(null);
-
-      // TODO: CHECK THE RENAVIATION PROBLEM
-
       setActiveScreen('main');
     } catch (error) {
       console.log('Error recognizing text:', error);
