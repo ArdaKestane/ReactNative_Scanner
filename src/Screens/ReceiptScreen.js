@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const MainScreen = ({componentsData, onComponentPress, onDeleteComponent}) => {
+const ReceiptScreen = ({ componentsData, onComponentPress, onDeleteComponent }) => {
   const deleteComponent = component => {
     const updatedComponents = componentsData.filter(c => c !== component);
     onDeleteComponent(updatedComponents);
@@ -30,30 +30,30 @@ const MainScreen = ({componentsData, onComponentPress, onDeleteComponent}) => {
             justifyContent: 'space-between',
           }}
           onPress={() => onComponentPress(component)}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
-              source={{uri: component.image}}
-              style={{width: 50, height: 50, marginRight: 10, borderRadius: 25}}
+              source={{ uri: component.image }}
+              style={{ width: 50, height: 50, marginRight: 10, borderRadius: 25 }}
             />
             <View>
               <Text>
-                <Text style={{fontWeight: 'bold'}}>Date: </Text>
+                <Text style={{ fontWeight: 'bold' }}>Date: </Text>
                 {component.date}
               </Text>
               <Text>
-                <Text style={{fontWeight: 'bold'}}>Amount: </Text>
+                <Text style={{ fontWeight: 'bold' }}>Amount: </Text>
                 {typeof component.amount === 'string'
                   ? component.amount.length <= 10
                     ? component.amount
                     : component.amount.substring(0, 10) + '...'
                   : String(component.amount).length <= 10
-                  ? String(component.amount)
-                  : String(component.amount).substring(0, 10) + '...'}
+                    ? String(component.amount)
+                    : String(component.amount).substring(0, 10) + '...'}
               </Text>
             </View>
           </View>
           <TouchableOpacity onPress={() => onDeleteComponent(component)}>
-            <Icon name="delete" size={20} color="red" />
+            <Icon name="delete" size={25} color="red" />
           </TouchableOpacity>
         </TouchableOpacity>
       ))}
@@ -61,4 +61,4 @@ const MainScreen = ({componentsData, onComponentPress, onDeleteComponent}) => {
   );
 };
 
-export default MainScreen;
+export default ReceiptScreen;
