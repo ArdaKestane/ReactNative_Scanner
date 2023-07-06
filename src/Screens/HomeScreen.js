@@ -1,22 +1,25 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 
-const HomeScreen = ({ componentsData }) => {
+const HomeScreen = ({componentsData}) => {
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  const filteredReceipts = componentsData.filter((c) => {
+  const filteredReceipts = componentsData.filter(c => {
     const receiptDateParts = c.date.split('.');
     const receiptDate = new Date(
       parseInt(receiptDateParts[2]),
       parseInt(receiptDateParts[1]) - 1,
-      parseInt(receiptDateParts[0])
+      parseInt(receiptDateParts[0]),
     );
     return receiptDate > thirtyDaysAgo;
   });
 
   const totalReceipts = filteredReceipts.length;
-  const totalAmount = filteredReceipts.reduce((total, c) => total + c.amount, 0);
+  const totalAmount = filteredReceipts.reduce(
+    (total, c) => total + c.amount,
+    0,
+  );
 
   return (
     <View style={styles.container}>
@@ -33,9 +36,7 @@ const HomeScreen = ({ componentsData }) => {
         <Text style={styles.infoText}>With total of</Text>
         <Text style={styles.infoValue}>{totalReceipts}</Text>
         <Text style={styles.infoText}>receipts</Text>
-
       </View>
-
     </View>
   );
 };
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 25,
     marginBottom: 20,
-    color: 'black'
+    color: 'black',
   },
   amountContainer: {
     flexDirection: 'row',
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 10,
     marginBottom: 2,
-    color: '#7F7F86' // Reduce the marginBottom
+    color: '#7F7F86', // Reduce the marginBottom
   },
   infoValue: {
     fontSize: 16,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
-  }
+  },
 });
 
 export default HomeScreen;

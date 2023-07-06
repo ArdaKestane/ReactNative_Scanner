@@ -1,10 +1,21 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const ReceiptScreen = ({ componentsData, onComponentPress, onDeleteComponent }) => {
-  const deleteComponent = (component) => {
-    const updatedComponents = componentsData.filter((c) => c !== component);
+const ReceiptScreen = ({
+  componentsData,
+  onComponentPress,
+  onDeleteComponent,
+}) => {
+  const deleteComponent = component => {
+    const updatedComponents = componentsData.filter(c => c !== component);
     onDeleteComponent(updatedComponents);
   };
 
@@ -14,11 +25,10 @@ const ReceiptScreen = ({ componentsData, onComponentPress, onDeleteComponent }) 
         <TouchableOpacity
           key={index}
           style={styles.componentContainer}
-          onPress={() => onComponentPress(component)}
-        >
+          onPress={() => onComponentPress(component)}>
           <View style={styles.componentInfo}>
             <Image
-              source={{ uri: component.image }}
+              source={{uri: component.image}}
               style={styles.componentImage}
             />
             <View>
@@ -33,8 +43,8 @@ const ReceiptScreen = ({ componentsData, onComponentPress, onDeleteComponent }) 
                     ? component.amount
                     : component.amount.substring(0, 10) + '...'
                   : String(component.amount).length <= 10
-                    ? String(component.amount)
-                    : String(component.amount).substring(0, 10) + '...'}
+                  ? String(component.amount)
+                  : String(component.amount).substring(0, 10) + '...'}
               </Text>
             </View>
           </View>
@@ -52,25 +62,22 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 16,
     paddingVertical: 10,
-
   },
   componentContainer: {
+    marginTop: 15,
     marginVertical: 2.5,
     marginBottom: 10,
-    backgroundColor: 'white',
     borderRadius: 25,
     padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#EEEEEE',
-
   },
   componentInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     height: 75,
-
   },
   componentImage: {
     width: 60,
