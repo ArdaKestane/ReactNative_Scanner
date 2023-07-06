@@ -1,47 +1,33 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ReceiptScreen = ({ componentsData, onComponentPress, onDeleteComponent }) => {
-  const deleteComponent = component => {
-    const updatedComponents = componentsData.filter(c => c !== component);
+  const deleteComponent = (component) => {
+    const updatedComponents = componentsData.filter((c) => c !== component);
     onDeleteComponent(updatedComponents);
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        backgroundColor: '#FDF5E6',
-        paddingHorizontal: 16,
-        paddingVertical: 10,
-      }}>
+    <ScrollView contentContainerStyle={styles.container}>
       {componentsData.map((component, index) => (
         <TouchableOpacity
           key={index}
-          style={{
-            marginVertical: 2.5,
-            marginBottom: 10,
-            backgroundColor: 'white',
-            borderRadius: 10,
-            padding: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-          onPress={() => onComponentPress(component)}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          style={styles.componentContainer}
+          onPress={() => onComponentPress(component)}
+        >
+          <View style={styles.componentInfo}>
             <Image
               source={{ uri: component.image }}
-              style={{ width: 50, height: 50, marginRight: 10, borderRadius: 25 }}
+              style={styles.componentImage}
             />
             <View>
               <Text>
-                <Text style={{ fontWeight: 'bold' }}>Date: </Text>
+                <Text style={styles.componentLabel}>Date: </Text>
                 {component.date}
               </Text>
               <Text>
-                <Text style={{ fontWeight: 'bold' }}>Amount: </Text>
+                <Text style={styles.componentLabel}>Amount: </Text>
                 {typeof component.amount === 'string'
                   ? component.amount.length <= 10
                     ? component.amount
@@ -53,12 +39,49 @@ const ReceiptScreen = ({ componentsData, onComponentPress, onDeleteComponent }) 
             </View>
           </View>
           <TouchableOpacity onPress={() => onDeleteComponent(component)}>
-            <Icon name="delete" size={25} color="red" />
+            <Icon name="delete" size={30} color="red" />
           </TouchableOpacity>
         </TouchableOpacity>
       ))}
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+
+  },
+  componentContainer: {
+    marginVertical: 2.5,
+    marginBottom: 10,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#EEEEEE',
+
+  },
+  componentInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 75,
+
+  },
+  componentImage: {
+    width: 60,
+    height: 60,
+    marginRight: 10,
+    borderRadius: 50,
+  },
+  componentLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
 export default ReceiptScreen;

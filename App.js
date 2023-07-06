@@ -190,9 +190,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingVertical: 10,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#EEEEEE',
     borderTopWidth: 1,
-    borderTopColor: '#ddd',
+    borderTopColor: '#EEEEEE',
   },
   tabButton: {
     alignItems: 'center',
