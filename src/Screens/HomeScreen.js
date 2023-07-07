@@ -1,6 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import Lottie from 'lottie-react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
 
 const HomeScreen = ({componentsData}) => {
   const thirtyDaysAgo = new Date();
@@ -22,22 +21,58 @@ const HomeScreen = ({componentsData}) => {
     0,
   );
 
+  const [loadingAmount, setLoadingAmount] = useState(true);
+  const [loadingReceipts, setLoadingReceipts] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay with a timeout
+    const delay = setTimeout(() => {
+      setLoadingAmount(false);
+    }, 2000); // Simulate a 2-second delay
+
+    return () => clearTimeout(delay);
+  }, []);
+
+  useEffect(() => {
+    // Simulate loading delay with a timeout
+    const delay = setTimeout(() => {
+      setLoadingReceipts(false);
+    }, 2000); // Simulate a 2-second delay
+
+    return () => clearTimeout(delay);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Monthly Summary</Text>
-      <Lottie
-        style={styles.animation}
-        source={require('../Assets/announcment.json')}
-        autoPlay
-        loop
+      <Image
+        style={styles.image}
+        source={require('../Assets/announcement.png')}
       />
+
       <View style={styles.amountContainer}>
-        <Text style={styles.amountValue}>₺{totalAmount.toFixed(2)}</Text>
+        {loadingAmount ? (
+          <ActivityIndicator
+            size="small"
+            color="black"
+            style={styles.loadingIndicator}
+          />
+        ) : (
+          <Text style={styles.amountValue}>₺{totalAmount.toFixed(2)}</Text>
+        )}
         <Text style={styles.amountText}>spent</Text>
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>With a total of</Text>
-        <Text style={styles.infoValue}>{totalReceipts}</Text>
+        {loadingReceipts ? (
+          <ActivityIndicator
+            size="small"
+            color="black"
+            style={styles.loadingIndicator}
+          />
+        ) : (
+          <Text style={styles.infoValue}>{totalReceipts}</Text>
+        )}
         <Text style={styles.infoText}>receipts</Text>
       </View>
     </View>
@@ -54,11 +89,12 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 25,
     color: 'black',
+    textAlign: 'center',
+    marginBottom: 20,
   },
   amountContainer: {
     flexDirection: 'row',
     marginBottom: 10,
-    justifyContent: 'center',
     alignItems: 'flex-end',
   },
   amountText: {
@@ -90,35 +126,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
-  animation: {
+  image: {
     width: 200,
     height: 200,
   },
-  mockComponentContainer: {
-    marginTop: 20,
-    backgroundColor: '#F5F5F5',
-    padding: 10,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  mockComponentText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  mockComponent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  mockComponentImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
-  },
-  mockComponentLabel: {
-    fontSize: 16,
-    color: 'black',
+  loadingIndicator: {
+    marginLeft: 10,
   },
 });
 

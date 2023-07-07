@@ -10,7 +10,6 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Lottie from 'lottie-react-native';
 
 const ReceiptScreen = ({
   componentsData,
@@ -105,12 +104,7 @@ const ReceiptScreen = ({
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {loading ? (
           <View style={styles.loadingContainer}>
-            <Lottie
-              style={styles.animation}
-              source={require('../Assets/loader.json')}
-              autoPlay
-              loop
-            />
+            <ActivityIndicator size="large" color="black" />
           </View>
         ) : (
           <>
@@ -246,12 +240,7 @@ const styles = StyleSheet.create({
   deleteButton: {
     padding: 10,
   },
-  animation: {
-    width: 150,
-    height: 150,
-  },
   buttons: {
-    gap: 10,
     flexDirection: 'row',
     position: 'absolute',
     bottom: 5,
