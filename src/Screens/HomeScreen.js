@@ -7,11 +7,11 @@ const HomeScreen = ({componentsData}) => {
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
   const filteredReceipts = componentsData.filter(c => {
-    const receiptDateParts = c.date.split('.');
+    const receiptDateParts = c.date.split('-');
     const receiptDate = new Date(
-      parseInt(receiptDateParts[2]),
-      parseInt(receiptDateParts[1]) - 1,
       parseInt(receiptDateParts[0]),
+      parseInt(receiptDateParts[1]) - 1,
+      parseInt(receiptDateParts[2]),
     );
     return receiptDate > thirtyDaysAgo;
   });
@@ -25,7 +25,6 @@ const HomeScreen = ({componentsData}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Monthly Summary</Text>
-
       <Lottie
         style={styles.animation}
         source={require('../Assets/announcment.json')}
@@ -37,7 +36,7 @@ const HomeScreen = ({componentsData}) => {
         <Text style={styles.amountText}>spent</Text>
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>With total of</Text>
+        <Text style={styles.infoText}>With a total of</Text>
         <Text style={styles.infoValue}>{totalReceipts}</Text>
         <Text style={styles.infoText}>receipts</Text>
       </View>
@@ -77,14 +76,14 @@ const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: 'row',
     marginBottom: 10,
-    alignItems: 'baseline', // Align items on the baseline
+    alignItems: 'baseline',
   },
   infoText: {
     fontSize: 12,
     marginRight: 10,
     marginLeft: 10,
     marginBottom: 2,
-    color: '#7F7F86', // Reduce the marginBottom
+    color: '#7F7F86',
   },
   infoValue: {
     fontSize: 16,
@@ -94,6 +93,32 @@ const styles = StyleSheet.create({
   animation: {
     width: 200,
     height: 200,
+  },
+  mockComponentContainer: {
+    marginTop: 20,
+    backgroundColor: '#F5F5F5',
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  mockComponentText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  mockComponent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  mockComponentImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+  },
+  mockComponentLabel: {
+    fontSize: 16,
+    color: 'black',
   },
 });
 

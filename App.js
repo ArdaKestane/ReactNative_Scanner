@@ -32,14 +32,9 @@ const App = () => {
     }
   };
 
-  //TODO: CHECK THE SAVING CONDITIONS AFTER REBUILDING THE APP
-
-  const saveComponentsData = async () => {
+  const saveComponentsData = async data => {
     try {
-      await AsyncStorage.setItem(
-        'componentsData',
-        JSON.stringify(componentsData),
-      );
+      await AsyncStorage.setItem('componentsData', JSON.stringify(data));
     } catch (error) {
       console.error('Error saving components:', error);
     }
@@ -77,8 +72,6 @@ const App = () => {
       const extractedText = await recognizeText(image);
       const extractedTextString = String(extractedText);
 
-      // TODO: Exclude the credit card information
-
       const lastAsteriskIndex = extractedTextString.lastIndexOf('*');
 
       let amount = null;
@@ -99,6 +92,7 @@ const App = () => {
       }
 
       const newComponent = {
+        id: Date.now().toString(),
         image,
         date: new Date().toLocaleDateString(),
         amount,
@@ -172,12 +166,10 @@ const App = () => {
       extractedText: 'Mock component',
     };
 
-    // Logic to add the mockComponent to the componentsData array
     const updatedComponents = [...componentsData, mockComponent];
     setComponentsData(updatedComponents);
 
     try {
-      // Save the updated componentsData to AsyncStorage or your preferred storage mechanism
       saveComponentsData(updatedComponents);
     } catch (error) {
       console.error('Error saving components:', error);
@@ -225,7 +217,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingVertical: 10,
-    backgroundColor: '#5D3891',
+    backgroundColor: '#7444A0',
     borderTopWidth: 1,
     borderTopColor: '#EEEEEE',
   },

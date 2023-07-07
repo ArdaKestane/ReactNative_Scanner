@@ -176,8 +176,24 @@ const ReceiptScreen = ({
         )}
       </ScrollView>
 
-      <TouchableOpacity style={styles.addButton} onPress={onAddMockComponent}>
-        <Icon name="add-circle-outline" size={24} color="#444" />
+      <TouchableOpacity style={styles.buttons}>
+        <Icon
+          name="add-circle-outline"
+          size={24}
+          color="white"
+          onPress={onAddMockComponent}
+        />
+        <Icon
+          name="refresh"
+          size={24}
+          color="white"
+          onPress={() => {
+            setLoading(true);
+            setTimeout(() => {
+              setLoading(false);
+            }, 2000); // Simulate a 2-second loading process
+          }}
+        />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -234,10 +250,12 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
   },
-  addButton: {
+  buttons: {
+    gap: 10,
+    flexDirection: 'row',
     position: 'absolute',
-    bottom: 20,
-    right: 20,
+    bottom: 5,
+    right: 5,
     backgroundColor: '#F99417',
     borderRadius: 50,
     padding: 10,
