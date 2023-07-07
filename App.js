@@ -141,6 +141,7 @@ const App = () => {
             componentsData={componentsData}
             onComponentPress={handleComponentPress}
             onDeleteComponent={handleDeleteComponent}
+            onAddMockComponent={handleAddMockComponent} // Pass the function as a prop
           />
         );
       case 'camera':
@@ -162,27 +163,49 @@ const App = () => {
     return null;
   };
 
+  const handleAddMockComponent = () => {
+    const mockComponent = {
+      id: Date.now().toString(),
+      image: `https://picsum.photos/200?random=${Date.now()}`,
+      date: '2023-07-08',
+      amount: 10.99,
+      extractedText: 'Mock component',
+    };
+
+    // Logic to add the mockComponent to the componentsData array
+    const updatedComponents = [...componentsData, mockComponent];
+    setComponentsData(updatedComponents);
+
+    try {
+      // Save the updated componentsData to AsyncStorage or your preferred storage mechanism
+      saveComponentsData(updatedComponents);
+    } catch (error) {
+      console.error('Error saving components:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>{renderScreen()}</View>
       {renderComponentDetailScreen()}
+
       <View style={styles.tabBar}>
         <TouchableOpacity
           style={styles.tabButton}
           onPress={() => setActiveScreen('home')}>
-          <Icon name="home-outline" size={24} color="#444" />
+          <Icon name="home" size={24} color="white" />
           <Text style={styles.tabButtonText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
           onPress={() => setActiveScreen('camera')}>
-          <Icon name="camera-outline" size={24} color="#444" />
+          <Icon name="camera" size={24} color="white" />
           <Text style={styles.tabButtonText}>Camera</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
           onPress={() => setActiveScreen('receipt')}>
-          <Icon name="receipt-outline" size={24} color="#444" />
+          <Icon name="receipt" size={24} color="white" />
           <Text style={styles.tabButtonText}>Receipts</Text>
         </TouchableOpacity>
       </View>
@@ -202,7 +225,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingVertical: 10,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#5D3891',
     borderTopWidth: 1,
     borderTopColor: '#EEEEEE',
   },
@@ -211,7 +234,7 @@ const styles = StyleSheet.create({
   },
   tabButtonText: {
     fontSize: 12,
-    color: '#444',
+    color: 'white',
     marginTop: 2,
   },
 });

@@ -66,11 +66,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 10,
     marginBottom: 8,
+    color: 'black',
   },
   amountValue: {
     fontSize: 36,
     fontWeight: 'bold',
     fontStyle: 'italic',
+    color: 'black',
   },
   infoContainer: {
     flexDirection: 'row',
@@ -87,6 +89,7 @@ const styles = StyleSheet.create({
   infoValue: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: 'black',
   },
   animation: {
     width: 200,
