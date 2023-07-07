@@ -17,7 +17,7 @@ const HomeScreen = ({componentsData}) => {
 
   const totalReceipts = filteredReceipts.length;
   const totalAmount = filteredReceipts.reduce(
-    (total, c) => total + c.amount,
+    (total, c) => total + parseFloat(c.amount),
     0,
   );
 
@@ -25,10 +25,9 @@ const HomeScreen = ({componentsData}) => {
   const [loadingReceipts, setLoadingReceipts] = useState(true);
 
   useEffect(() => {
-    // Simulate loading delay with a timeout
     const delay = setTimeout(() => {
       setLoadingAmount(false);
-    }, 2000); // Simulate a 2-second delay
+    }, 500); // Simulate a 2-second delay
 
     return () => clearTimeout(delay);
   }, []);
@@ -37,7 +36,7 @@ const HomeScreen = ({componentsData}) => {
     // Simulate loading delay with a timeout
     const delay = setTimeout(() => {
       setLoadingReceipts(false);
-    }, 2000); // Simulate a 2-second delay
+    }, 500); // Simulate a 2-second delay
 
     return () => clearTimeout(delay);
   }, []);

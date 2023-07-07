@@ -158,11 +158,18 @@ const App = () => {
   };
 
   const handleAddMockComponent = () => {
+    const minAmount = 10;
+    const maxAmount = 50;
+    const randomAmount = (
+      Math.random() * (maxAmount - minAmount) +
+      minAmount
+    ).toFixed(2);
+
     const mockComponent = {
       id: Date.now().toString(),
       image: `https://picsum.photos/200?random=${Date.now()}`,
       date: '2023-07-08',
-      amount: 10.99,
+      amount: randomAmount,
       extractedText: 'Mock component',
     };
 
