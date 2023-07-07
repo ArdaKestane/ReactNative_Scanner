@@ -27,7 +27,7 @@ const ReceiptScreen = ({
     // Simulate loading delay with a timeout
     const delay = setTimeout(() => {
       setLoading(false);
-    }, 2000); // Simulate a 2-second delay
+    }, 250); // Simulate a 2-second delay
 
     return () => clearTimeout(delay);
   }, []);
@@ -96,7 +96,7 @@ const ReceiptScreen = ({
       );
       setLoadingComponents(false);
       setDeletingComponentId(null);
-    }, 2000); // Simulate a 2-second delay
+    }, 250);
   };
 
   return (
@@ -185,7 +185,7 @@ const ReceiptScreen = ({
             setLoading(true);
             setTimeout(() => {
               setLoading(false);
-            }, 2000); // Simulate a 2-second loading process
+            }, 250); // Simulate a 2-second loading process
           }}
         />
       </TouchableOpacity>
