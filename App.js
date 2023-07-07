@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReceiptScreen from './src/Screens/ReceiptScreen';
 import CameraScreen from './src/Screens/CameraScreen';
@@ -38,7 +38,7 @@ const App = () => {
     try {
       await AsyncStorage.setItem(
         'componentsData',
-        JSON.stringify(componentsData)
+        JSON.stringify(componentsData),
       );
     } catch (error) {
       console.error('Error saving components:', error);
@@ -53,24 +53,31 @@ const App = () => {
     }
   }, [selectedComponent]);
 
-  const handleComponentPress = (component) => {
+  const handleComponentPress = component => {
     setSelectedComponent(component);
   };
 
-  const handleDeleteComponent = (component) => {
-    const updatedComponents = componentsData.filter((c) => c !== component);
+  const handleDeleteComponent = async component => {
+    const updatedComponents = componentsData.filter(c => c !== component);
     setComponentsData(updatedComponents);
-    saveComponentsData();
+    try {
+      await AsyncStorage.setItem(
+        'componentsData',
+        JSON.stringify(updatedComponents),
+      );
+    } catch (error) {
+      console.error('Error saving components:', error);
+    }
   };
 
-  const handleDocumentScanned = async (image) => {
+  const handleDocumentScanned = async image => {
     setScannedImage(image);
 
     try {
       const extractedText = await recognizeText(image);
       const extractedTextString = String(extractedText);
 
-      // TODO: EXCLUDE THE CREDIT CARD INFORMATION
+      // TODO: Exclude the credit card information
 
       const lastAsteriskIndex = extractedTextString.lastIndexOf('*');
 
@@ -98,9 +105,17 @@ const App = () => {
         extractedText,
       };
 
-      setComponentsData((prevData) => [...prevData, newComponent]);
+      const updatedComponents = [...componentsData, newComponent];
+      setComponentsData(updatedComponents);
 
-      saveComponentsData();
+      try {
+        await AsyncStorage.setItem(
+          'componentsData',
+          JSON.stringify(updatedComponents),
+        );
+      } catch (error) {
+        console.error('Error saving components:', error);
+      }
 
       setScannedImage(null);
       setActiveScreen('receipt');
@@ -109,7 +124,7 @@ const App = () => {
     }
   };
 
-  const recognizeText = async (imagePath) => {
+  const recognizeText = async imagePath => {
     const result = await TextRecognition.recognize(imagePath, {
       visionIgnoreThreshold: 0.5,
     });
@@ -154,22 +169,19 @@ const App = () => {
       <View style={styles.tabBar}>
         <TouchableOpacity
           style={styles.tabButton}
-          onPress={() => setActiveScreen('home')}
-        >
+          onPress={() => setActiveScreen('home')}>
           <Icon name="home-outline" size={24} color="#444" />
           <Text style={styles.tabButtonText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
-          onPress={() => setActiveScreen('camera')}
-        >
+          onPress={() => setActiveScreen('camera')}>
           <Icon name="camera-outline" size={24} color="#444" />
           <Text style={styles.tabButtonText}>Camera</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
-          onPress={() => setActiveScreen('receipt')}
-        >
+          onPress={() => setActiveScreen('receipt')}>
           <Icon name="receipt-outline" size={24} color="#444" />
           <Text style={styles.tabButtonText}>Receipts</Text>
         </TouchableOpacity>

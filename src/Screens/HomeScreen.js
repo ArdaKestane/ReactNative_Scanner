@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
+import Lottie from 'lottie-react-native';
 
 const HomeScreen = ({componentsData}) => {
   const thirtyDaysAgo = new Date();
@@ -24,9 +25,12 @@ const HomeScreen = ({componentsData}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Monthly Summary</Text>
-      <Image
-        source={require('../Assets/announcment.png')}
-        style={styles.image}
+
+      <Lottie
+        style={styles.animation}
+        source={require('../Assets/announcment.json')}
+        autoPlay
+        loop
       />
       <View style={styles.amountContainer}>
         <Text style={styles.amountValue}>₺{totalAmount.toFixed(2)}</Text>
@@ -50,7 +54,6 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 25,
-    marginBottom: 20,
     color: 'black',
   },
   amountContainer: {
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  image: {
+  animation: {
     width: 200,
     height: 200,
   },

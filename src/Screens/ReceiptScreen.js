@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -14,16 +15,36 @@ const ReceiptScreen = ({
   onComponentPress,
   onDeleteComponent,
 }) => {
-  const deleteComponent = component => {
-    const updatedComponents = componentsData.filter(c => c !== component);
-    onDeleteComponent(updatedComponents);
+  const [loadingComponents, setLoadingComponents] = useState(false);
+  const [deletingComponentId, setDeletingComponentId] = useState(null);
+
+  const simulateServerDelete = component => {
+    setDeletingComponentId(component.id);
+    setLoadingComponents(true);
+
+    // Simulate server delete request delay with a timeout
+    setTimeout(() => {
+      // Simulated success response from server
+      const success = true;
+
+      if (success) {
+        // If delete is successful, call the onDeleteComponent function
+        onDeleteComponent(component);
+      } else {
+        // Handle error scenario if delete fails
+        console.error('Error deleting component');
+      }
+
+      setLoadingComponents(false);
+      setDeletingComponentId(null);
+    }, 2000); // Simulate a 2-second delay
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {componentsData.map((component, index) => (
+      {componentsData.map(component => (
         <TouchableOpacity
-          key={index}
+          key={component.id}
           style={styles.componentContainer}
           onPress={() => onComponentPress(component)}>
           <View style={styles.componentInfo}>
@@ -48,8 +69,15 @@ const ReceiptScreen = ({
               </Text>
             </View>
           </View>
-          <TouchableOpacity onPress={() => onDeleteComponent(component)}>
-            <Icon name="delete" size={30} color="red" />
+          <TouchableOpacity
+            onPress={() => simulateServerDelete(component)}
+            disabled={loadingComponents || deletingComponentId === component.id}
+            style={styles.deleteButton}>
+            {deletingComponentId === component.id && loadingComponents ? (
+              <ActivityIndicator size="small" color="gray" />
+            ) : (
+              <Icon name="delete" size={30} color="red" />
+            )}
           </TouchableOpacity>
         </TouchableOpacity>
       ))}
@@ -88,6 +116,9 @@ const styles = StyleSheet.create({
   componentLabel: {
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  deleteButton: {
+    padding: 10,
   },
 });
 

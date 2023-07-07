@@ -5,7 +5,7 @@ import DocumentScanner from 'react-native-document-scanner-plugin';
 const CameraScreen = ({ onDocumentScanned }) => {
   const scanDocument = async () => {
     try {
-      const { scannedImages } = await DocumentScanner.scanDocument();
+      const {scannedImages} = await DocumentScanner.scanDocument();
 
       if (scannedImages.length > 0) {
         const image = scannedImages[0];
