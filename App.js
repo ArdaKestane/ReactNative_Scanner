@@ -88,7 +88,7 @@ const App = () => {
           console.error('Error: Invalid amount format');
         }
       } else {
-        console.error('Error: Asterisk (*) not found');
+        console.log('Error: Asterisk (*) not found');
       }
 
       const newComponent = {
