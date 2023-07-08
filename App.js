@@ -68,7 +68,6 @@ const App = () => {
 
   const handleDocumentScanned = async image => {
     setScannedImage(image);
-
     try {
       const extractedText = await recognizeText(image);
       const extractedTextString = String(extractedText);
@@ -195,7 +194,6 @@ const App = () => {
       Math.random() * (maxAmount - minAmount) +
       minAmount
     ).toFixed(2);
-
     const mockComponent = {
       id: Date.now().toString(),
       image: `https://picsum.photos/200?random=${Date.now()}`,
@@ -218,7 +216,6 @@ const App = () => {
     <View style={styles.container}>
       <View style={styles.content}>{renderScreen()}</View>
       {renderComponentDetailScreen()}
-
       <View style={styles.tabBar}>
         <TouchableOpacity
           style={styles.tabButton}

@@ -10,6 +10,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import I18n from '../I18n';
 
 const ReceiptScreen = ({
   componentsData,
@@ -28,7 +29,6 @@ const ReceiptScreen = ({
     const delay = setTimeout(() => {
       setLoading(false);
     }, 250); // Simulate a 2-second delay
-
     return () => clearTimeout(delay);
   }, []);
 
@@ -64,7 +64,6 @@ const ReceiptScreen = ({
   const handleDeleteSelectedComponents = () => {
     // Set the deleting status for selected components
     setDeletingComponents(selectedComponents);
-
     // Delete all selected components
     selectedComponents.forEach(component => {
       simulateServerDelete(component);
@@ -77,7 +76,6 @@ const ReceiptScreen = ({
   const simulateServerDelete = component => {
     setDeletingComponentId(component.id);
     setLoadingComponents(true);
-
     // Simulate server delete request delay with a timeout
     setTimeout(() => {
       // Simulated success response from server
@@ -121,11 +119,15 @@ const ReceiptScreen = ({
                     />
                     <View>
                       <Text>
-                        <Text style={styles.componentLabel}>Date: </Text>
+                        <Text style={styles.componentLabel}>
+                          {I18n.t('date')}:{' '}
+                        </Text>
                         {component.date}
                       </Text>
                       <Text>
-                        <Text style={styles.componentLabel}>Amount: </Text>
+                        <Text style={styles.componentLabel}>
+                          {I18n.t('amount')}:{' '}
+                        </Text>
                         {typeof component.amount === 'string'
                           ? component.amount.length <= 10
                             ? component.amount
@@ -156,13 +158,12 @@ const ReceiptScreen = ({
                 </TouchableOpacity>
               ))}
             </View>
-
             {selectedComponents.length > 0 && (
               <TouchableOpacity
                 style={styles.deleteSelectedButton}
                 onPress={handleDeleteSelectedComponents}>
                 <Text style={styles.deleteSelectedButtonText}>
-                  Delete Selected
+                  {I18n.t('deleteSelected')}
                 </Text>
               </TouchableOpacity>
             )}

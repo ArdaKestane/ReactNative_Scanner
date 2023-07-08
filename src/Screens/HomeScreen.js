@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
+import I18n from '../I18n';
 
 const HomeScreen = ({componentsData}) => {
   const totalReceipts = componentsData.length;
@@ -10,7 +11,7 @@ const HomeScreen = ({componentsData}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Monthly Summary</Text>
+      <Text style={styles.heading}>{I18n.t('monthlySummary')}</Text>
       <Image
         style={styles.image}
         source={require('../Assets/announcement.png')}
@@ -18,12 +19,12 @@ const HomeScreen = ({componentsData}) => {
 
       <View style={styles.amountContainer}>
         <Text style={styles.amountValue}>₺{totalAmount.toFixed(2)}</Text>
-        <Text style={styles.amountText}>spent</Text>
+        <Text style={styles.amountText}>{I18n.t('spent')}</Text>
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>With a total of</Text>
+        <Text style={styles.infoText}>{I18n.t('withTotalOf')}</Text>
         <Text style={styles.infoValue}>{totalReceipts}</Text>
-        <Text style={styles.infoText}>receipts</Text>
+        <Text style={styles.infoText}>{I18n.t('receipts')}</Text>
       </View>
     </View>
   );
