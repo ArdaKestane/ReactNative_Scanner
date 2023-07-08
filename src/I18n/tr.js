@@ -1,7 +1,7 @@
 export default {
   home: 'Ana Sayfa',
   camera: 'Kamera',
-  receipts: 'Fişler',
+  receipt: 'Fişler',
   date: 'Tarih',
   amount: 'Miktar',
   deleteSelected: 'Seçilenleri Sil',

@@ -1,7 +1,7 @@
 export default {
   home: 'Home',
   camera: 'Camera',
-  receipts: 'Receipts',
+  receipt: 'Receipts',
   date: 'Date',
   amount: 'Amount',
   deleteSelected: 'Delete Selected',
