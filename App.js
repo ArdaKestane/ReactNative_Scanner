@@ -233,7 +233,7 @@ const App = () => {
           style={styles.tabButton}
           onPress={() => setActiveScreen('receipt')}>
           <Icon name="receipt" size={24} color="white" />
-          <Text style={styles.tabButtonText}>{I18n.t('receipts')}</Text>
+          <Text style={styles.tabButtonText}>{I18n.t('receipt')}</Text>
         </TouchableOpacity>
       </View>
     </View>
