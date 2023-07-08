@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  StatusBar,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReceiptScreen from './src/Screens/ReceiptScreen';
 import CameraScreen from './src/Screens/CameraScreen';
@@ -214,6 +220,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#7444A0" />
       <View style={styles.content}>{renderScreen()}</View>
       {renderComponentDetailScreen()}
       <View style={styles.tabBar}>
