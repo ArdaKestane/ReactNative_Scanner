@@ -11,7 +11,13 @@ I18n.translations = {
   tr,
 };
 
-const deviceLanguage = NativeModules.I18nManager.localeIdentifier.split('_')[0];
+let deviceLanguage = 'en'; // Default language
+
+if (NativeModules.I18nManager && NativeModules.I18nManager.localeIdentifier) {
+  deviceLanguage = NativeModules.I18nManager.localeIdentifier.split('_')[0];
+} else if (NativeModules.I18nManager && NativeModules.I18nManager.locale) {
+  deviceLanguage = NativeModules.I18nManager.locale.split('-')[0];
+}
 
 I18n.defaultLocale = deviceLanguage;
 
