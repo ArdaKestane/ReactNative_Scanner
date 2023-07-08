@@ -7,6 +7,7 @@ import ComponentDetailScreen from './src/Screens/ComponentDetailScreen';
 import HomeScreen from './src/Screens/HomeScreen';
 import TextRecognition from 'react-native-text-recognition';
 import Icon from 'react-native-vector-icons/Ionicons';
+import I18n from './src/I18n';
 
 const App = () => {
   const [activeScreen, setActiveScreen] = useState('receipt');
@@ -223,19 +224,19 @@ const App = () => {
           style={styles.tabButton}
           onPress={() => setActiveScreen('home')}>
           <Icon name="home" size={24} color="white" />
-          <Text style={styles.tabButtonText}>Home</Text>
+          <Text style={styles.tabButtonText}>{I18n.t('home')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
           onPress={() => setActiveScreen('camera')}>
           <Icon name="camera" size={24} color="white" />
-          <Text style={styles.tabButtonText}>Camera</Text>
+          <Text style={styles.tabButtonText}>{I18n.t('camera')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
           onPress={() => setActiveScreen('receipt')}>
           <Icon name="receipt" size={24} color="white" />
-          <Text style={styles.tabButtonText}>Receipts</Text>
+          <Text style={styles.tabButtonText}>{I18n.t('receipts')}</Text>
         </TouchableOpacity>
       </View>
     </View>
