@@ -77,15 +77,45 @@ const App = () => {
       let amount = null;
 
       if (lastAsteriskIndex !== -1) {
-        const amountText = extractedTextString
-          .substring(lastAsteriskIndex + 1)
-          .trim();
+        const characterBeforeAsterisk = extractedTextString.charAt(
+          lastAsteriskIndex - 1,
+        );
 
-        amount = parseFloat(amountText.replace(/,/g, '.'));
+        if (characterBeforeAsterisk === '*') {
+          console.log('credit card');
+        } else if (
+          /\d/.test(extractedTextString.charAt(lastAsteriskIndex + 1))
+        ) {
+          const previousAsteriskIndex = extractedTextString.lastIndexOf(
+            '*',
+            lastAsteriskIndex - 1,
+          );
 
-        if (isNaN(amount)) {
-          amount = null;
-          console.error('Error: Invalid amount format');
+          if (previousAsteriskIndex !== -1) {
+            const amountText = extractedTextString
+              .substring(previousAsteriskIndex + 1, lastAsteriskIndex)
+              .trim();
+
+            amount = parseFloat(amountText.replace(/,/g, '.'));
+
+            if (isNaN(amount)) {
+              amount = null;
+              console.error('Error: Invalid amount format');
+            }
+          } else {
+            console.log('Error: Previous asterisk (*) not found');
+          }
+        } else {
+          const amountText = extractedTextString
+            .substring(lastAsteriskIndex + 1)
+            .trim();
+
+          amount = parseFloat(amountText.replace(/,/g, '.'));
+
+          if (isNaN(amount)) {
+            amount = null;
+            console.error('Error: Invalid amount format');
+          }
         }
       } else {
         console.log('Error: Asterisk (*) not found');
