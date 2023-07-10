@@ -1,9 +1,12 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
-const TransactionCard = ({type, amount, total}) => {
-  // Calculate the progress percentage
-  const progress = (amount / total) * 100;
+const TransactionCard = ({type, amount, maxAmount}) => {
+  // Calculate the progress percentage based on the maximum amount
+  const progress = (amount / maxAmount) * 100;
+
+  // Ensure the progress doesn't exceed 100% or go below 0%
+  const clampedProgress = Math.max(0, Math.min(progress, 100));
 
   // Define the image source based on the transaction type
   let imageSource;
@@ -18,6 +21,7 @@ const TransactionCard = ({type, amount, total}) => {
       imageSource = require('../Assets/healthcare.png');
       break;
     default:
+      break;
   }
 
   return (
@@ -29,11 +33,11 @@ const TransactionCard = ({type, amount, total}) => {
         <Text style={styles.title}>{type}</Text>
         <View style={styles.row}>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.progressBar, {width: `${progress}%`}]} />
+            <View
+              style={[styles.progressBar, {width: `${clampedProgress}%`}]}
+            />
           </View>
-          <Text style={styles.amountText}>
-            $ {amount.toFixed(2)} / $ {total.toFixed(2)}
-          </Text>
+          <Text style={styles.amountText}>₺ {amount.toFixed(2)}</Text>
         </View>
       </View>
     </View>

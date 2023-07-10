@@ -40,9 +40,9 @@ const HomeScreen = ({componentsData}) => {
             <Text style={styles.seeAll}>See all</Text>
           </TouchableOpacity>
         </View>
-        <TransactionCard type="Taxi" amount={200} total={200} />
-        <TransactionCard type="Grocery" amount={100} total={200} />
-        <TransactionCard type="Healthcare" amount={25} total={200} />
+        <TransactionCard type="Taxi" amount={200} maxAmount={200} />
+        <TransactionCard type="Grocery" amount={100} maxAmount={200} />
+        <TransactionCard type="Healthcare" amount={25} maxAmount={200} />
       </View>
     </ScrollView>
   );
