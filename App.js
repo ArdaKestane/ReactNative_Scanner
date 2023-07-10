@@ -243,19 +243,16 @@ const App = () => {
           style={styles.tabButton}
           onPress={() => setActiveScreen('home')}>
           <Icon name="home" size={24} color="white" />
-          <Text style={styles.tabButtonText}>{I18n.t('home')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
           onPress={() => setActiveScreen('camera')}>
           <Icon name="camera" size={24} color="white" />
-          <Text style={styles.tabButtonText}>{I18n.t('camera')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
           onPress={() => setActiveScreen('receipt')}>
           <Icon name="receipt" size={24} color="white" />
-          <Text style={styles.tabButtonText}>{I18n.t('receipt')}</Text>
         </TouchableOpacity>
       </View>
     </View>

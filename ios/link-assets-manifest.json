@@ -2,6 +2,30 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "src/Fonts/Ruda-Black.ttf",
+      "sha1": "cbce3f609faf4b3c8c68e93fd3480e4629c98302"
+    },
+    {
+      "path": "src/Fonts/Ruda-Bold.ttf",
+      "sha1": "f81205d3198dca208640fab619d97e2862c36559"
+    },
+    {
+      "path": "src/Fonts/Ruda-ExtraBold.ttf",
+      "sha1": "9070dad3908013f2030b4f59fffca550f3c71cfd"
+    },
+    {
+      "path": "src/Fonts/Ruda-Medium.ttf",
+      "sha1": "c46329f1702b39af04e9015a7d9f47d1e2a8cd00"
+    },
+    {
+      "path": "src/Fonts/Ruda-Regular.ttf",
+      "sha1": "ffe44b2c52239d1ef0784214382b7b9c21ee60ae"
+    },
+    {
+      "path": "src/Fonts/Ruda-SemiBold.ttf",
+      "sha1": "81d62400dae4bebd808f9335ddb60be0339d0fca"
+    },
+    {
       "path": "src/Fonts/Sanchez-Italic.ttf",
       "sha1": "e7324da410bc7422f07ea671db01b36e044e3f0c"
     },

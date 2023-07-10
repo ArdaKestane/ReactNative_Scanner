@@ -15,6 +15,7 @@ const {height} = Dimensions.get('window');
 const WelcomeScreen = ({handlePress}) => {
   return (
     <View style={styles.container}>
+      <Image style={styles.background} source={require('../Assets/bg.png')} />
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -33,12 +34,7 @@ const WelcomeScreen = ({handlePress}) => {
           <Text style={styles.startText}>Let's start!</Text>
           <TouchableOpacity style={styles.startButton} onPress={handlePress}>
             <View style={styles.startInnerContainer}>
-              <Icon
-                name="arrow-forward-outline"
-                size={24}
-                color="grey"
-                style={styles.icon}
-              />
+              <Icon name="arrow-forward-outline" style={styles.icon} />
             </View>
           </TouchableOpacity>
         </View>
@@ -49,11 +45,16 @@ const WelcomeScreen = ({handlePress}) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
     backgroundColor: 'white',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  background: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   imageContainer: {
     position: 'absolute',
@@ -76,13 +77,13 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 20,
     fontSize: 38,
-    fontFamily: 'Sanchez-Italic',
+    fontFamily: 'Ruda-ExtraBold',
     textAlign: 'left',
     color: 'black',
   },
   text: {
     fontSize: 15,
-    fontFamily: 'Sanchez-Regular',
+    fontFamily: 'Ruda-Regular',
     marginTop: 20,
     textAlign: 'left',
     color: '#7C7C7C',
@@ -92,37 +93,39 @@ const styles = StyleSheet.create({
     marginTop: 50,
     borderWidth: 1,
     borderRadius: 50,
-    height: 50,
+    height: 60,
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingLeft: 20,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: 'white',
   },
   startButton: {
     alignSelf: 'flex-end',
-    height: 50,
+    height: 58,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   startInnerContainer: {
-    borderLeftWidth: 1,
+    borderWidth: 1,
     borderRadius: 50,
-    height: 50,
+    height: 58,
     width: 100,
     alignSelf: 'flex-end',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#FFFFD0',
   },
   startText: {
-    fontSize: 15,
-    fontFamily: 'Poppins-SemiBold',
-    fontStyle: 'italic',
+    fontSize: 18,
+    fontFamily: 'Ruda-Bold',
     textAlign: 'left',
     color: 'black',
   },
   icon: {
     marginRight: 5,
+    fontSize: 24,
+    color: 'black',
   },
 });
 

@@ -1,6 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import I18n from '../I18n';
+import TransactionCard from '../Components/transactionCard';
 
 const HomeScreen = ({componentsData}) => {
   const totalReceipts = componentsData.length;
@@ -10,76 +18,103 @@ const HomeScreen = ({componentsData}) => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>{I18n.t('monthlySummary')}</Text>
-      <Image
-        style={styles.image}
-        source={require('../Assets/announcement.png')}
-      />
-
-      <View style={styles.amountContainer}>
-        <Text style={styles.amountValue}>₺{totalAmount.toFixed(2)}</Text>
-        <Text style={styles.amountText}>{I18n.t('spent')}</Text>
-      </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image style={styles.imageHeader} source={require('../Assets/top.png')} />
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>{I18n.t('withTotalOf')}</Text>
-        <Text style={styles.infoValue}>{totalReceipts}</Text>
-        <Text style={styles.infoText}>{I18n.t('receipts')}</Text>
+        <Text style={styles.heading}>Hi, Arda Kestane</Text>
+
+        <View style={styles.amountContainer}>
+          <Text style={styles.amountValue}>₺{totalAmount.toFixed(2)}</Text>
+          <Text style={styles.amountText}>{I18n.t('spent')}</Text>
+        </View>
+        <View style={styles.receiptContainer}>
+          <Text style={styles.infoText}>{I18n.t('withTotalOf')}</Text>
+          <Text style={styles.infoValue}>{totalReceipts}</Text>
+          <Text style={styles.infoText}>{I18n.t('receipts')}</Text>
+        </View>
       </View>
-    </View>
+      <View style={styles.transactionContainer}>
+        <View style={styles.transactionHeaders}>
+          <Text style={styles.heading}>Transactions</Text>
+          <TouchableOpacity>
+            <Text style={styles.seeAll}>See all</Text>
+          </TouchableOpacity>
+        </View>
+        <TransactionCard type="Taxi" amount={200} total={200} />
+        <TransactionCard type="Grocery" amount={100} total={200} />
+        <TransactionCard type="Healthcare" amount={25} total={200} />
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexGrow: 1,
+    backgroundColor: '#F9F9F9',
+  },
+  imageHeader: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+  },
+
+  infoContainer: {
     padding: 20,
+    justifyContent: 'space-between',
+    height: 200,
+    paddingBottom: 40,
   },
   heading: {
-    fontSize: 25,
+    fontSize: 24,
     color: 'black',
-    textAlign: 'center',
-    marginBottom: 20,
+    fontFamily: 'Ruda-Bold',
   },
   amountContainer: {
+    gap: 10,
     flexDirection: 'row',
-    marginBottom: 10,
-    alignItems: 'flex-end',
-  },
-  amountText: {
-    fontSize: 18,
-    marginLeft: 10,
-    marginBottom: 8,
-    color: 'black',
+    alignItems: 'center',
   },
   amountValue: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    fontStyle: 'italic',
+    fontSize: 24,
     color: 'black',
+    fontFamily: 'Ruda-Bold',
   },
-  infoContainer: {
+  amountText: {
+    fontSize: 16,
+    color: 'black',
+    fontFamily: 'Ruda-Regular',
+  },
+  receiptContainer: {
+    gap: 10,
     flexDirection: 'row',
-    marginBottom: 10,
-    alignItems: 'baseline',
+    alignItems: 'center',
+    marginTop: 10,
   },
+
   infoText: {
-    fontSize: 12,
-    marginRight: 10,
-    marginLeft: 10,
-    marginBottom: 2,
-    color: '#7F7F86',
+    fontSize: 16,
+    color: 'black',
+    fontFamily: 'Ruda-Regular',
   },
   infoValue: {
     fontSize: 16,
-    fontWeight: 'bold',
     color: 'black',
+    fontFamily: 'Ruda-Bold',
   },
-  image: {
-    width: 200,
-    height: 200,
+  transactionContainer: {},
+  transactionHeaders: {
+    flexDirection: 'row',
+    padding: 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  seeAll: {
+    fontSize: 16,
+    color: '#9C8FE6',
+    fontFamily: 'Ruda-Black',
   },
 });
 

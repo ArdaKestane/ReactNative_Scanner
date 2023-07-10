@@ -16,6 +16,12 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		FDC85039EF824EC9B98E3E64 /* Sanchez-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 540A8E62A6214817975A6004 /* Sanchez-Italic.ttf */; };
 		FD6B6EB57B75424594383F45 /* Sanchez-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D506E6B09144B5EAB35FCE6 /* Sanchez-Regular.ttf */; };
+		D47FDE75736041738CB9503A /* Ruda-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 169DA4BAA6C5437980528CEA /* Ruda-Black.ttf */; };
+		F008B0CC750A4FC2BC0524B7 /* Ruda-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A8863CCBD4C4CFF91A997F0 /* Ruda-Bold.ttf */; };
+		78C8E8648377492E9570BE56 /* Ruda-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 988A9F13AAD248CC8BB115C7 /* Ruda-ExtraBold.ttf */; };
+		1BA0220FD3064E769755F33D /* Ruda-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C08A4C89BD145D68AC08580 /* Ruda-Medium.ttf */; };
+		3A540C1F293549709402749A /* Ruda-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 022F5CF465374600880633B6 /* Ruda-Regular.ttf */; };
+		AD602A83717C446CAED506DD /* Ruda-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4D9BFCB302C49E99D104492 /* Ruda-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +54,12 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		540A8E62A6214817975A6004 /* Sanchez-Italic.ttf */ = {isa = PBXFileReference; name = "Sanchez-Italic.ttf"; path = "../src/Fonts/Sanchez-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		3D506E6B09144B5EAB35FCE6 /* Sanchez-Regular.ttf */ = {isa = PBXFileReference; name = "Sanchez-Regular.ttf"; path = "../src/Fonts/Sanchez-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		169DA4BAA6C5437980528CEA /* Ruda-Black.ttf */ = {isa = PBXFileReference; name = "Ruda-Black.ttf"; path = "../src/Fonts/Ruda-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6A8863CCBD4C4CFF91A997F0 /* Ruda-Bold.ttf */ = {isa = PBXFileReference; name = "Ruda-Bold.ttf"; path = "../src/Fonts/Ruda-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		988A9F13AAD248CC8BB115C7 /* Ruda-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Ruda-ExtraBold.ttf"; path = "../src/Fonts/Ruda-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2C08A4C89BD145D68AC08580 /* Ruda-Medium.ttf */ = {isa = PBXFileReference; name = "Ruda-Medium.ttf"; path = "../src/Fonts/Ruda-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		022F5CF465374600880633B6 /* Ruda-Regular.ttf */ = {isa = PBXFileReference; name = "Ruda-Regular.ttf"; path = "../src/Fonts/Ruda-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E4D9BFCB302C49E99D104492 /* Ruda-SemiBold.ttf */ = {isa = PBXFileReference; name = "Ruda-SemiBold.ttf"; path = "../src/Fonts/Ruda-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +170,12 @@
 			children = (
 				540A8E62A6214817975A6004 /* Sanchez-Italic.ttf */,
 				3D506E6B09144B5EAB35FCE6 /* Sanchez-Regular.ttf */,
+				169DA4BAA6C5437980528CEA /* Ruda-Black.ttf */,
+				6A8863CCBD4C4CFF91A997F0 /* Ruda-Bold.ttf */,
+				988A9F13AAD248CC8BB115C7 /* Ruda-ExtraBold.ttf */,
+				2C08A4C89BD145D68AC08580 /* Ruda-Medium.ttf */,
+				022F5CF465374600880633B6 /* Ruda-Regular.ttf */,
+				E4D9BFCB302C49E99D104492 /* Ruda-SemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -261,6 +279,12 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				FDC85039EF824EC9B98E3E64 /* Sanchez-Italic.ttf in Resources */,
 				FD6B6EB57B75424594383F45 /* Sanchez-Regular.ttf in Resources */,
+				D47FDE75736041738CB9503A /* Ruda-Black.ttf in Resources */,
+				F008B0CC750A4FC2BC0524B7 /* Ruda-Bold.ttf in Resources */,
+				78C8E8648377492E9570BE56 /* Ruda-ExtraBold.ttf in Resources */,
+				1BA0220FD3064E769755F33D /* Ruda-Medium.ttf in Resources */,
+				3A540C1F293549709402749A /* Ruda-Regular.ttf in Resources */,
+				AD602A83717C446CAED506DD /* Ruda-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
