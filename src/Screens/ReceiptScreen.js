@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import I18n from '../I18n';
 import ReceiptCard from '../Components/receiptCard';
 
-const ComponentScreen = ({
+const ReceiptScreen = ({
   componentsData,
   onComponentPress,
   onDeleteComponent,
@@ -25,7 +25,7 @@ const ComponentScreen = ({
   useEffect(() => {
     const delay = setTimeout(() => {
       setLoading(false);
-    }, 250); // Screen Button
+    }, 250);
     return () => clearTimeout(delay);
   }, []);
 
@@ -90,6 +90,7 @@ const ComponentScreen = ({
 
     onAddMockComponent(mockComponent);
   };
+  console.log('componentsData', componentsData);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -105,7 +106,16 @@ const ComponentScreen = ({
                 <ReceiptCard
                   key={component.id}
                   component={component}
-                  onPress={handleComponentPress}
+                  image={
+                    component.category === 'taxi'
+                      ? require('../Assets/taxi.png')
+                      : component.category === 'grocery'
+                      ? require('../Assets/grocery.png')
+                      : component.category === 'healthcare'
+                      ? require('../Assets/healthcare.png')
+                      : null
+                  }
+                  onPress={() => handleComponentPress(component)} // Wrap in a function to avoid immediate execution
                   onDelete={onDeleteComponent}
                   isSelected={isComponentSelected(component)}
                 />
@@ -135,7 +145,7 @@ const ComponentScreen = ({
             setTimeout(() => {
               setLoading(false);
             }, 250);
-            console.log(componentsData); // Refresh button
+            // Refresh button
           }}>
           <Icon name="refresh" size={24} color="white" />
         </TouchableOpacity>
@@ -153,7 +163,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 16,
     paddingVertical: 10,
-    paddingBottom: 60, // Account for the height of the bottom navigation bar
+    paddingBottom: 60,
   },
   loadingContainer: {
     flex: 1,
@@ -194,4 +204,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComponentScreen;
+export default ReceiptScreen;

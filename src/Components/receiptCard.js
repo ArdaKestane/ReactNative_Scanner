@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const ReceiptCard = ({component, onPress, onDelete, isSelected}) => {
-  const {type, amount, date, image} = component;
+const ReceiptCard = ({component, image, onPress, onDelete, isSelected}) => {
+  const {type, amount, date} = component;
   const [deleting, setDeleting] = useState(false);
 
   const handleDelete = () => {
@@ -42,7 +42,11 @@ const ReceiptCard = ({component, onPress, onDelete, isSelected}) => {
         <Text style={styles.title}>Tarih: {date}</Text>
         <Text style={styles.title}>
           Tutar:{' '}
-          {amount.length <= 10 ? amount : amount.substring(0, 10) + '...'}
+          {amount !== undefined && amount !== null
+            ? amount.toString().length <= 10
+              ? amount.toString()
+              : amount.toString().substring(0, 10) + '...'
+            : 'N/A'}
         </Text>
       </View>
       {deleting ? (
