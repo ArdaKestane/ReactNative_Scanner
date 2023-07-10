@@ -11,6 +11,7 @@ import ReceiptScreen from './src/Screens/ReceiptScreen';
 import CameraScreen from './src/Screens/CameraScreen';
 import ComponentDetailScreen from './src/Screens/ComponentDetailScreen';
 import HomeScreen from './src/Screens/HomeScreen';
+import WelcomeScreen from './src/Screens/WelcomeScreen';
 import TextRecognition from 'react-native-text-recognition';
 import Icon from 'react-native-vector-icons/Ionicons';
 import I18n from './src/I18n';
@@ -20,8 +21,14 @@ const App = () => {
   const [scannedImage, setScannedImage] = useState(null);
   const [componentsData, setComponentsData] = useState([]);
   const [selectedComponent, setSelectedComponent] = useState(null);
+  const [isWelcomePageShown, setIsWelcomePageShown] = useState(true);
+
+  const handleWelcomePageDismiss = () => {
+    setIsWelcomePageShown(false);
+  };
 
   useEffect(() => {
+    // Load components data from storage only at start
     loadComponentsData();
   }, []);
 
@@ -48,6 +55,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    // when selectedComponent state variable changes clenup function
     if (selectedComponent) {
       return () => {
         setSelectedComponent(null);
@@ -72,48 +80,30 @@ const App = () => {
     }
   };
 
-  const handleDocumentScanned = async image => {
-    setScannedImage(image);
-    try {
-      const extractedText = await recognizeText(image);
-      const extractedTextString = String(extractedText);
+  const amountAlgorithm = async image => {
+    const extractedText = await recognizeText(image);
+    const extractedTextString = String(extractedText);
 
-      const lastAsteriskIndex = extractedTextString.lastIndexOf('*');
+    const lastAsteriskIndex = extractedTextString.lastIndexOf('*');
 
-      let amount = null;
+    let amount = null;
 
-      if (lastAsteriskIndex !== -1) {
-        const characterBeforeAsterisk = extractedTextString.charAt(
+    if (lastAsteriskIndex !== -1) {
+      const characterBeforeAsterisk = extractedTextString.charAt(
+        lastAsteriskIndex - 1,
+      );
+
+      if (characterBeforeAsterisk === '*') {
+        console.log('credit card');
+      } else if (/\d/.test(extractedTextString.charAt(lastAsteriskIndex + 1))) {
+        const previousAsteriskIndex = extractedTextString.lastIndexOf(
+          '*',
           lastAsteriskIndex - 1,
         );
 
-        if (characterBeforeAsterisk === '*') {
-          console.log('credit card');
-        } else if (
-          /\d/.test(extractedTextString.charAt(lastAsteriskIndex + 1))
-        ) {
-          const previousAsteriskIndex = extractedTextString.lastIndexOf(
-            '*',
-            lastAsteriskIndex - 1,
-          );
-
-          if (previousAsteriskIndex !== -1) {
-            const amountText = extractedTextString
-              .substring(previousAsteriskIndex + 1, lastAsteriskIndex)
-              .trim();
-
-            amount = parseFloat(amountText.replace(/,/g, '.'));
-
-            if (isNaN(amount)) {
-              amount = null;
-              console.error('Error: Invalid amount format');
-            }
-          } else {
-            console.log('Error: Previous asterisk (*) not found');
-          }
-        } else {
+        if (previousAsteriskIndex !== -1) {
           const amountText = extractedTextString
-            .substring(lastAsteriskIndex + 1)
+            .substring(previousAsteriskIndex + 1, lastAsteriskIndex)
             .trim();
 
           amount = parseFloat(amountText.replace(/,/g, '.'));
@@ -122,11 +112,34 @@ const App = () => {
             amount = null;
             console.error('Error: Invalid amount format');
           }
+        } else {
+          console.log('Error: Previous asterisk (*) not found');
         }
       } else {
-        console.log('Error: Asterisk (*) not found');
-      }
+        const amountText = extractedTextString
+          .substring(lastAsteriskIndex + 1)
+          .trim();
 
+        amount = parseFloat(amountText.replace(/,/g, '.'));
+
+        if (isNaN(amount)) {
+          amount = null;
+          console.error('Error: Invalid amount format');
+        }
+      }
+    } else {
+      console.log('Error: Asterisk (*) not found');
+    }
+
+    return [amount, extractedText];
+  };
+
+  const handleDocumentScanned = async image => {
+    setScannedImage(image);
+
+    const [amount, extractedText] = await amountAlgorithm(image);
+
+    try {
       const newComponent = {
         id: Date.now().toString(),
         image,
@@ -218,7 +231,9 @@ const App = () => {
     }
   };
 
-  return (
+  return isWelcomePageShown ? (
+    <WelcomeScreen handlePress={handleWelcomePageDismiss} />
+  ) : (
     <View style={styles.container}>
       <StatusBar backgroundColor="#7444A0" />
       <View style={styles.content}>{renderScreen()}</View>

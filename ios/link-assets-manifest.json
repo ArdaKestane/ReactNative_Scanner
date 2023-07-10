@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/Fonts/Sanchez-Italic.ttf",
+      "sha1": "e7324da410bc7422f07ea671db01b36e044e3f0c"
+    },
+    {
+      "path": "src/Fonts/Sanchez-Regular.ttf",
+      "sha1": "262f28c19bfd2acca242aac8126048bbab351e40"
+    }
+  ]
+}
