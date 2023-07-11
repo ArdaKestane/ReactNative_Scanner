@@ -213,12 +213,26 @@ function App() {
   };
 
   const handleSaveComponent = async updatedComponent => {
-    const updatedComponents = componentsData.map(component => {
-      if (component.id === updatedComponent.id) {
-        return updatedComponent;
-      }
-      return component;
-    });
+    let updatedComponents;
+
+    const existingComponentIndex = componentsData.findIndex(
+      component => component.id === updatedComponent.id,
+    );
+
+    if (existingComponentIndex !== -1) {
+      // Update existing component
+      updatedComponents = componentsData.map(component => {
+        if (component.id === updatedComponent.id) {
+          return updatedComponent;
+        }
+        return component;
+      });
+    } else {
+      // Create new component
+      updatedComponents = [...componentsData, updatedComponent];
+    }
+
+    console.log('updatedComponents', updatedComponents);
     setComponentsData(updatedComponents);
     await saveComponentsData(updatedComponents);
     renderReceiptScreen(); // Wait for saving components to AsyncStorage
