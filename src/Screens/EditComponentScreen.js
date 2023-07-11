@@ -11,19 +11,20 @@ import {
   Modal,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {YellowBox} from 'react-native';
+
+YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 
 const EditComponentScreen = ({component, onSave, onCancel}) => {
   const [editedComponent, setEditedComponent] = useState({...component});
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  console.log('component', component);
+  const [selectedType, setSelectedType] = useState(null);
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
     {
       label: 'Taxi',
-      value: 'taxi',
+      value: 'Taxi',
       icon: () => (
         <Image
           source={require('../Assets/taxi.png')}
@@ -33,7 +34,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
     },
     {
       label: 'Grocery',
-      value: 'grocery',
+      value: 'Grocery',
       icon: () => (
         <Image
           source={require('../Assets/grocery.png')}
@@ -43,7 +44,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
     },
     {
       label: 'Healthcare',
-      value: 'healthcare',
+      value: 'Healthcare',
       icon: () => (
         <Image
           source={require('../Assets/healthcare.png')}
@@ -54,11 +55,11 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
   ]);
 
   useEffect(() => {
-    if (component.category) {
-      setValue(component.category);
-      setSelectedCategory(component.category);
+    if (component.type) {
+      setValue(component.type);
+      setSelectedType(component.type);
     }
-  }, [component.category]);
+  }, [component.type]);
 
   const handleInputChange = (field, value) => {
     setEditedComponent(prevState => ({
@@ -70,7 +71,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
   const handleSave = async () => {
     const updatedComponent = {
       ...editedComponent,
-      category: selectedCategory,
+      type: selectedType,
     };
 
     await onSave(updatedComponent);
@@ -95,7 +96,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
           setOpen={setOpen}
           setValue={val => {
             setValue(val);
-            setSelectedCategory(val);
+            setSelectedType(val);
           }}
           setItems={setItems}
           style={styles.dropdown}

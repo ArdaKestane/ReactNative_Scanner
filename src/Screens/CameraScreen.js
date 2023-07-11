@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import React, {useEffect} from 'react';
+import {View} from 'react-native';
 import DocumentScanner from 'react-native-document-scanner-plugin';
 
-const CameraScreen = ({ onDocumentScanned }) => {
+const CameraScreen = ({onDocumentScanned}) => {
   const scanDocument = async () => {
     try {
       const {scannedImages} = await DocumentScanner.scanDocument();
@@ -22,7 +22,7 @@ const CameraScreen = ({ onDocumentScanned }) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
+    <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
       {/* Add your camera screen content here */}
     </View>
   );

@@ -21,6 +21,7 @@ const ReceiptScreen = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [selectedComponents, setSelectedComponents] = useState([]);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -55,10 +56,17 @@ const ReceiptScreen = ({
   };
 
   const handleDeleteSelectedComponents = () => {
-    selectedComponents.forEach(component => {
-      onDeleteComponent(component);
-    });
-    setSelectedComponents([]);
+    setDeleting(true);
+
+    const delay = setTimeout(() => {
+      selectedComponents.forEach(component => {
+        onDeleteComponent(component);
+      });
+      setSelectedComponents([]);
+      setDeleting(false);
+    }, 250);
+
+    return () => clearTimeout(delay);
   };
 
   const handleAddComponent = handleAddMockComponent => {
@@ -90,7 +98,6 @@ const ReceiptScreen = ({
 
     onAddMockComponent(mockComponent);
   };
-  console.log('componentsData', componentsData);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -107,17 +114,18 @@ const ReceiptScreen = ({
                   key={component.id}
                   component={component}
                   image={
-                    component.category === 'taxi'
+                    component.type === 'Taxi'
                       ? require('../Assets/taxi.png')
-                      : component.category === 'grocery'
+                      : component.type === 'Grocery'
                       ? require('../Assets/grocery.png')
-                      : component.category === 'healthcare'
+                      : component.type === 'Healthcare'
                       ? require('../Assets/healthcare.png')
                       : null
                   }
                   onPress={() => handleComponentPress(component)} // Wrap in a function to avoid immediate execution
                   onDelete={onDeleteComponent}
                   isSelected={isComponentSelected(component)}
+                  deleting={deleting && isComponentSelected(component)}
                 />
               ))}
             </View>
@@ -125,9 +133,13 @@ const ReceiptScreen = ({
               <TouchableOpacity
                 style={styles.deleteSelectedButton}
                 onPress={handleDeleteSelectedComponents}>
-                <Text style={styles.deleteSelectedButtonText}>
-                  {I18n.t('deleteSelected')}
-                </Text>
+                {deleting ? (
+                  <ActivityIndicator size="small" color="white" />
+                ) : (
+                  <Text style={styles.deleteSelectedButtonText}>
+                    {I18n.t('deleteSelected')}
+                  </Text>
+                )}
               </TouchableOpacity>
             )}
           </>

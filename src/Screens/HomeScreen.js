@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,16 +6,57 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import I18n from '../I18n';
 import TransactionCard from '../Components/transactionCard';
 
 const HomeScreen = ({componentsData}) => {
-  const totalReceipts = componentsData.length;
-  const totalAmount = componentsData.reduce(
-    (total, c) => total + parseFloat(c.amount || 0),
-    0,
-  );
+  const [loading, setLoading] = useState(true);
+  const [totalReceipts, setTotalReceipts] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [taxiAmount, setTaxiAmount] = useState(0);
+  const [groceryAmount, setGroceryAmount] = useState(0);
+  const [healthcareAmount, setHealthcareAmount] = useState(0);
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setLoading(false);
+      setTotalReceipts(componentsData.length);
+
+      const filteredTotalAmount = componentsData.reduce(
+        (total, component) => total + parseFloat(component.amount || 0),
+        0,
+      );
+      setTotalAmount(filteredTotalAmount);
+
+      const filteredTaxiAmount = componentsData
+        .filter(component => component.type === 'Taxi')
+        .reduce(
+          (total, component) => total + parseFloat(component.amount || 0),
+          0,
+        );
+      setTaxiAmount(filteredTaxiAmount);
+
+      const filteredGroceryAmount = componentsData
+        .filter(component => component.type === 'Grocery')
+        .reduce(
+          (total, component) => total + parseFloat(component.amount || 0),
+          0,
+        );
+      setGroceryAmount(filteredGroceryAmount);
+
+      const filteredHealthcareAmount = componentsData
+        .filter(component => component.type === 'Healthcare')
+        .reduce(
+          (total, component) => total + parseFloat(component.amount || 0),
+          0,
+        );
+      setHealthcareAmount(filteredHealthcareAmount);
+    }, 250);
+
+    return () => clearTimeout(delay);
+  }, [componentsData]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -24,13 +65,23 @@ const HomeScreen = ({componentsData}) => {
         <Text style={styles.heading}>Hi, Arda Kestane</Text>
 
         <View style={styles.amountContainer}>
-          <Text style={styles.amountValue}>₺{totalAmount.toFixed(2)}</Text>
+          {loading ? (
+            <ActivityIndicator size="small" color="black" />
+          ) : (
+            <Text style={styles.amountValue}>₺{totalAmount.toFixed(2)}</Text>
+          )}
           <Text style={styles.amountText}>{I18n.t('spent')}</Text>
         </View>
         <View style={styles.receiptContainer}>
-          <Text style={styles.infoText}>{I18n.t('withTotalOf')}</Text>
-          <Text style={styles.infoValue}>{totalReceipts}</Text>
-          <Text style={styles.infoText}>{I18n.t('receipts')}</Text>
+          {loading ? (
+            <ActivityIndicator size="small" color="black" />
+          ) : (
+            <>
+              <Text style={styles.infoText}>{I18n.t('withTotalOf')}</Text>
+              <Text style={styles.infoValue}>{totalReceipts}</Text>
+              <Text style={styles.infoText}>{I18n.t('receipts')}</Text>
+            </>
+          )}
         </View>
       </View>
       <View style={styles.transactionContainer}>
@@ -40,9 +91,17 @@ const HomeScreen = ({componentsData}) => {
             <Text style={styles.seeAll}>See all</Text>
           </TouchableOpacity>
         </View>
-        <TransactionCard type="Taxi" amount={200} maxAmount={200} />
-        <TransactionCard type="Grocery" amount={100} maxAmount={200} />
-        <TransactionCard type="Healthcare" amount={25} maxAmount={200} />
+        <TransactionCard type="Taxi" amount={taxiAmount} maxAmount={200} />
+        <TransactionCard
+          type="Grocery"
+          amount={groceryAmount}
+          maxAmount={200}
+        />
+        <TransactionCard
+          type="Healthcare"
+          amount={healthcareAmount}
+          maxAmount={200}
+        />
       </View>
     </ScrollView>
   );
@@ -60,7 +119,6 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'cover',
   },
-
   infoContainer: {
     padding: 20,
     justifyContent: 'space-between',
@@ -93,7 +151,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-
   infoText: {
     fontSize: 16,
     color: 'black',

@@ -16,7 +16,6 @@ function App() {
   const [componentsData, setComponentsData] = useState([]);
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [isWelcomePageShown, setIsWelcomePageShown] = useState(true);
-  const [editedComponent, setEditedComponent] = useState(null);
 
   const handleWelcomePageDismiss = () => {
     setIsWelcomePageShown(false);
@@ -138,6 +137,10 @@ function App() {
 
     const [amount, extractedText] = await amountAlgorithm(image);
 
+    const componentTypes = ['Taxi', 'Grocery', 'Healthcare'];
+    const randomType =
+      componentTypes[Math.floor(Math.random() * componentTypes.length)];
+
     try {
       const newComponent = {
         id: Date.now().toString(),
@@ -145,25 +148,13 @@ function App() {
         date: new Date().toLocaleDateString(),
         amount,
         extractedText,
-        category: 'Taxi',
+        type: randomType,
       };
 
-      const updatedComponents = [...componentsData, newComponent];
-      setComponentsData(updatedComponents);
-
-      try {
-        await AsyncStorage.setItem(
-          'componentsData',
-          JSON.stringify(updatedComponents),
-        );
-      } catch (error) {
-        console.error('Error saving components:', error);
-      }
-
-      setEditedComponent(newComponent);
       setScannedImage(null);
-      setSelectedComponent(newComponent); // Set the selectedComponent state to newComponent
-      setActiveScreen('edit');
+
+      setSelectedComponent(newComponent);
+      renderEditComponentScreen();
     } catch (error) {
       console.error('Error recognizing text:', error);
     }
@@ -181,14 +172,7 @@ function App() {
       case 'home':
         return <HomeScreen componentsData={componentsData} />;
       case 'receipt':
-        return (
-          <ReceiptScreen
-            componentsData={componentsData}
-            onComponentPress={handleComponentPress}
-            onDeleteComponent={handleDeleteComponent}
-            onAddMockComponent={handleAddMockComponent} // Pass the function as a prop
-          />
-        );
+        return renderReceiptScreen();
       case 'camera':
         return <CameraScreen onDocumentScanned={handleDocumentScanned} />;
       case 'edit':
@@ -217,6 +201,17 @@ function App() {
     return null;
   };
 
+  const renderReceiptScreen = () => {
+    return (
+      <ReceiptScreen
+        componentsData={componentsData}
+        onComponentPress={handleComponentPress}
+        onDeleteComponent={handleDeleteComponent}
+        onAddMockComponent={handleAddMockComponent}
+      />
+    );
+  };
+
   const handleSaveComponent = async updatedComponent => {
     const updatedComponents = componentsData.map(component => {
       if (component.id === updatedComponent.id) {
@@ -225,7 +220,8 @@ function App() {
       return component;
     });
     setComponentsData(updatedComponents);
-    await saveComponentsData(updatedComponents); // Wait for saving components to AsyncStorage
+    await saveComponentsData(updatedComponents);
+    renderReceiptScreen(); // Wait for saving components to AsyncStorage
   };
 
   const handleAddMockComponent = mockComponent => {

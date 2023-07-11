@@ -15,7 +15,9 @@ const ReceiptCard = ({component, image, onPress, onDelete, isSelected}) => {
 
   const handleDelete = () => {
     setDeleting(true);
-    onDelete(component);
+    setTimeout(() => {
+      onDelete(component);
+    }, 250); // Delay before calling onDelete
   };
 
   let imageSource;
@@ -72,7 +74,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
   },
-
   leftColumn: {
     marginRight: 10,
   },
@@ -92,11 +93,6 @@ const styles = StyleSheet.create({
   deleteButton: {
     borderRadius: 5,
     padding: 5,
-  },
-  deleteButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   selectedOverlay: {
     ...StyleSheet.absoluteFillObject,
