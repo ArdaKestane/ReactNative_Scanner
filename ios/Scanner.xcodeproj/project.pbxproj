@@ -12,16 +12,16 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		7699B88040F8A987B510C191 /* libPods-Scanner-ScannerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Scanner-ScannerTests.a */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		FDC85039EF824EC9B98E3E64 /* Sanchez-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 540A8E62A6214817975A6004 /* Sanchez-Italic.ttf */; };
-		FD6B6EB57B75424594383F45 /* Sanchez-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D506E6B09144B5EAB35FCE6 /* Sanchez-Regular.ttf */; };
-		D47FDE75736041738CB9503A /* Ruda-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 169DA4BAA6C5437980528CEA /* Ruda-Black.ttf */; };
-		F008B0CC750A4FC2BC0524B7 /* Ruda-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A8863CCBD4C4CFF91A997F0 /* Ruda-Bold.ttf */; };
-		78C8E8648377492E9570BE56 /* Ruda-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 988A9F13AAD248CC8BB115C7 /* Ruda-ExtraBold.ttf */; };
 		1BA0220FD3064E769755F33D /* Ruda-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C08A4C89BD145D68AC08580 /* Ruda-Medium.ttf */; };
 		3A540C1F293549709402749A /* Ruda-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 022F5CF465374600880633B6 /* Ruda-Regular.ttf */; };
+		7699B88040F8A987B510C191 /* libPods-Scanner-ScannerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Scanner-ScannerTests.a */; };
+		78C8E8648377492E9570BE56 /* Ruda-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 988A9F13AAD248CC8BB115C7 /* Ruda-ExtraBold.ttf */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		AD602A83717C446CAED506DD /* Ruda-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4D9BFCB302C49E99D104492 /* Ruda-SemiBold.ttf */; };
+		D47FDE75736041738CB9503A /* Ruda-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 169DA4BAA6C5437980528CEA /* Ruda-Black.ttf */; };
+		F008B0CC750A4FC2BC0524B7 /* Ruda-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A8863CCBD4C4CFF91A997F0 /* Ruda-Bold.ttf */; };
+		FD6B6EB57B75424594383F45 /* Sanchez-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D506E6B09144B5EAB35FCE6 /* Sanchez-Regular.ttf */; };
+		FDC85039EF824EC9B98E3E64 /* Sanchez-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 540A8E62A6214817975A6004 /* Sanchez-Italic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,28 +38,28 @@
 		00E356EE1AD99517003FC87E /* ScannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ScannerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScannerTests.m; sourceTree = "<group>"; };
+		022F5CF465374600880633B6 /* Ruda-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ruda-Regular.ttf"; path = "../src/Fonts/Ruda-Regular.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Scanner/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Scanner/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Scanner/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Scanner/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Scanner/main.m; sourceTree = "<group>"; };
+		169DA4BAA6C5437980528CEA /* Ruda-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ruda-Black.ttf"; path = "../src/Fonts/Ruda-Black.ttf"; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Scanner-ScannerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Scanner-ScannerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C08A4C89BD145D68AC08580 /* Ruda-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ruda-Medium.ttf"; path = "../src/Fonts/Ruda-Medium.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner.debug.xcconfig"; path = "Target Support Files/Pods-Scanner/Pods-Scanner.debug.xcconfig"; sourceTree = "<group>"; };
+		3D506E6B09144B5EAB35FCE6 /* Sanchez-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Sanchez-Regular.ttf"; path = "../src/Fonts/Sanchez-Regular.ttf"; sourceTree = "<group>"; };
+		540A8E62A6214817975A6004 /* Sanchez-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Sanchez-Italic.ttf"; path = "../src/Fonts/Sanchez-Italic.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner.release.xcconfig"; path = "Target Support Files/Pods-Scanner/Pods-Scanner.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Scanner-ScannerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner-ScannerTests.debug.xcconfig"; path = "Target Support Files/Pods-Scanner-ScannerTests/Pods-Scanner-ScannerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Scanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Scanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A8863CCBD4C4CFF91A997F0 /* Ruda-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ruda-Bold.ttf"; path = "../src/Fonts/Ruda-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Scanner/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Scanner-ScannerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner-ScannerTests.release.xcconfig"; path = "Target Support Files/Pods-Scanner-ScannerTests/Pods-Scanner-ScannerTests.release.xcconfig"; sourceTree = "<group>"; };
+		988A9F13AAD248CC8BB115C7 /* Ruda-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ruda-ExtraBold.ttf"; path = "../src/Fonts/Ruda-ExtraBold.ttf"; sourceTree = "<group>"; };
+		E4D9BFCB302C49E99D104492 /* Ruda-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ruda-SemiBold.ttf"; path = "../src/Fonts/Ruda-SemiBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		540A8E62A6214817975A6004 /* Sanchez-Italic.ttf */ = {isa = PBXFileReference; name = "Sanchez-Italic.ttf"; path = "../src/Fonts/Sanchez-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3D506E6B09144B5EAB35FCE6 /* Sanchez-Regular.ttf */ = {isa = PBXFileReference; name = "Sanchez-Regular.ttf"; path = "../src/Fonts/Sanchez-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		169DA4BAA6C5437980528CEA /* Ruda-Black.ttf */ = {isa = PBXFileReference; name = "Ruda-Black.ttf"; path = "../src/Fonts/Ruda-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6A8863CCBD4C4CFF91A997F0 /* Ruda-Bold.ttf */ = {isa = PBXFileReference; name = "Ruda-Bold.ttf"; path = "../src/Fonts/Ruda-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		988A9F13AAD248CC8BB115C7 /* Ruda-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Ruda-ExtraBold.ttf"; path = "../src/Fonts/Ruda-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2C08A4C89BD145D68AC08580 /* Ruda-Medium.ttf */ = {isa = PBXFileReference; name = "Ruda-Medium.ttf"; path = "../src/Fonts/Ruda-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		022F5CF465374600880633B6 /* Ruda-Regular.ttf */ = {isa = PBXFileReference; name = "Ruda-Regular.ttf"; path = "../src/Fonts/Ruda-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E4D9BFCB302C49E99D104492 /* Ruda-SemiBold.ttf */ = {isa = PBXFileReference; name = "Ruda-SemiBold.ttf"; path = "../src/Fonts/Ruda-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +110,22 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = Scanner;
+			sourceTree = "<group>";
+		};
+		205683725C644B51A8555886 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				540A8E62A6214817975A6004 /* Sanchez-Italic.ttf */,
+				3D506E6B09144B5EAB35FCE6 /* Sanchez-Regular.ttf */,
+				169DA4BAA6C5437980528CEA /* Ruda-Black.ttf */,
+				6A8863CCBD4C4CFF91A997F0 /* Ruda-Bold.ttf */,
+				988A9F13AAD248CC8BB115C7 /* Ruda-ExtraBold.ttf */,
+				2C08A4C89BD145D68AC08580 /* Ruda-Medium.ttf */,
+				022F5CF465374600880633B6 /* Ruda-Regular.ttf */,
+				E4D9BFCB302C49E99D104492 /* Ruda-SemiBold.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -164,22 +180,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		205683725C644B51A8555886 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				540A8E62A6214817975A6004 /* Sanchez-Italic.ttf */,
-				3D506E6B09144B5EAB35FCE6 /* Sanchez-Regular.ttf */,
-				169DA4BAA6C5437980528CEA /* Ruda-Black.ttf */,
-				6A8863CCBD4C4CFF91A997F0 /* Ruda-Bold.ttf */,
-				988A9F13AAD248CC8BB115C7 /* Ruda-ExtraBold.ttf */,
-				2C08A4C89BD145D68AC08580 /* Ruda-Medium.ttf */,
-				022F5CF465374600880633B6 /* Ruda-Regular.ttf */,
-				E4D9BFCB302C49E99D104492 /* Ruda-SemiBold.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
