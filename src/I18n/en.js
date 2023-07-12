@@ -3,6 +3,12 @@ export default {
   documentPayments:
     'Document all your payments and \nreceipts easily and simply.',
   letsStart: "Let's start!",
+  greeting: 'Hi, {{name}}',
+  spent: 'Spent',
+  withTotalOf: 'With a total of {totalReceipts}',
+  receipts: 'receipts',
+  transactions: 'Transactions',
+  seeAll: 'See all',
   home: 'Home',
   camera: 'Camera',
   receipt: 'Receipts',

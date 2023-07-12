@@ -15,4 +15,10 @@ export default {
   documentPayments:
     'Tüm ödemelerinizi ve \nfişlerinizi kolayca ve basitçe kaydedin.',
   letsStart: 'Hadi başlayalım!',
+  greeting: 'Merhaba, {{name}}',
+  spent: 'Harcandı',
+  with: 'Toplam ',
+  receipts: 'fiş ile',
+  transactions: 'İşlemler',
+  seeAll: 'Hepsini görüntüle',
 };

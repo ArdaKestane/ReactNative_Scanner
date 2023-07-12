@@ -62,7 +62,9 @@ const HomeScreen = ({componentsData}) => {
     <ScrollView contentContainerStyle={styles.container}>
       <Image style={styles.imageHeader} source={require('../Assets/top.png')} />
       <View style={styles.infoContainer}>
-        <Text style={styles.heading}>Hi, Arda Kestane</Text>
+        <Text style={styles.heading}>
+          {I18n.t('greeting', {name: 'Arda Kestane'})}
+        </Text>
 
         <View style={styles.amountContainer}>
           {loading ? (
@@ -77,7 +79,9 @@ const HomeScreen = ({componentsData}) => {
             <ActivityIndicator size="small" color="black" />
           ) : (
             <>
-              <Text style={styles.infoText}>{I18n.t('withTotalOf')}</Text>
+              <Text style={styles.infoText}>
+                {I18n.t('with', {totalReceipts})}
+              </Text>
               <Text style={styles.infoValue}>{totalReceipts}</Text>
               <Text style={styles.infoText}>{I18n.t('receipts')}</Text>
             </>
@@ -86,9 +90,9 @@ const HomeScreen = ({componentsData}) => {
       </View>
       <View style={styles.transactionContainer}>
         <View style={styles.transactionHeaders}>
-          <Text style={styles.heading}>Transactions</Text>
+          <Text style={styles.heading}>{I18n.t('transactions')}</Text>
           <TouchableOpacity>
-            <Text style={styles.seeAll}>See all</Text>
+            <Text style={styles.seeAll}>{I18n.t('seeAll')}</Text>
           </TouchableOpacity>
         </View>
         <TransactionCard type="Taxi" amount={taxiAmount} maxAmount={200} />
