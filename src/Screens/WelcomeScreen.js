@@ -13,6 +13,12 @@ import I18n from '../I18n';
 
 const {height} = Dimensions.get('window');
 
+let marginTop = 50; // Default marginTop value for English text
+
+if (I18n.defaultLocale === 'tr') {
+  marginTop = 30;
+}
+
 const WelcomeScreen = ({handlePress}) => {
   return (
     <View style={styles.container}>
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
   },
   startContainer: {
     flexDirection: 'row',
-    marginTop: 30,
+    marginTop: marginTop,
     borderWidth: 1,
     borderRadius: 50,
     height: 60,
