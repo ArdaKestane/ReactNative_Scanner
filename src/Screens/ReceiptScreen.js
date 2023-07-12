@@ -12,6 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import I18n from '../I18n';
 import ReceiptCard from '../Components/receiptCard';
+import {SwipeListView} from 'react-native-swipe-list-view';
 
 const ReceiptScreen = ({
   componentsData,
@@ -69,7 +70,7 @@ const ReceiptScreen = ({
     return () => clearTimeout(delay);
   };
 
-  const handleAddComponent = handleAddMockComponent => {
+  const handleAddComponent = () => {
     const minAmount = 10;
     const maxAmount = 50;
     const randomAmount = (
@@ -99,6 +100,36 @@ const ReceiptScreen = ({
     onAddMockComponent(mockComponent);
   };
 
+  const renderItem = ({item}) => (
+    <ReceiptCard
+      key={item.id}
+      component={item}
+      image={
+        item.type === 'Taxi'
+          ? require('../Assets/taxi.png')
+          : item.type === 'Grocery'
+          ? require('../Assets/grocery.png')
+          : item.type === 'Healthcare'
+          ? require('../Assets/healthcare.png')
+          : null
+      }
+      onPress={() => handleComponentPress(item)}
+      onDelete={onDeleteComponent}
+      isSelected={isComponentSelected(item)}
+      deleting={deleting && isComponentSelected(item)}
+    />
+  );
+
+  const renderHiddenItem = (data, rowMap) => (
+    <View style={styles.rowBack}>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => onDeleteComponent(data.item)}>
+        <Icon name="delete" size={24} color="white" />
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -108,27 +139,17 @@ const ReceiptScreen = ({
           </View>
         ) : (
           <>
-            <View style={styles.componentContainer}>
-              {componentsData.map(component => (
-                <ReceiptCard
-                  key={component.id}
-                  component={component}
-                  image={
-                    component.type === 'Taxi'
-                      ? require('../Assets/taxi.png')
-                      : component.type === 'Grocery'
-                      ? require('../Assets/grocery.png')
-                      : component.type === 'Healthcare'
-                      ? require('../Assets/healthcare.png')
-                      : null
-                  }
-                  onPress={() => handleComponentPress(component)} // Wrap in a function to avoid immediate execution
-                  onDelete={onDeleteComponent}
-                  isSelected={isComponentSelected(component)}
-                  deleting={deleting && isComponentSelected(component)}
-                />
-              ))}
-            </View>
+            <SwipeListView
+              data={componentsData}
+              renderItem={renderItem}
+              renderHiddenItem={renderHiddenItem}
+              rightOpenValue={-75}
+              disableRightSwipe
+              keyExtractor={item => item.id}
+              previewRowKey={'0'}
+              previewOpenValue={-40}
+              previewOpenDelay={3000}
+            />
             {selectedComponents.length > 0 && (
               <TouchableOpacity
                 style={styles.deleteSelectedButton}
@@ -173,6 +194,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     flexGrow: 1,
+    marginVertical: 10,
     paddingHorizontal: 16,
     paddingVertical: 10,
     paddingBottom: 60,
@@ -213,6 +235,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#7444A0',
     borderRadius: 50,
     padding: 10,
+  },
+  rowBack: {
+    paddingRight: 15,
+    marginVertical: 10,
+    alignItems: 'center',
+    backgroundColor: 'red',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    borderRadius: 20,
+  },
+  deleteText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 

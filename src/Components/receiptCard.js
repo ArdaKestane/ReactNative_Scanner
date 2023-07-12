@@ -56,24 +56,14 @@ const ReceiptCard = ({component, image, onPress, onDelete, isSelected}) => {
           </Text>
         </Text>
       </View>
-      {deleting ? (
-        <View style={styles.deleteButton}>
-          <ActivityIndicator size="small" color="black" />
-        </View>
-      ) : (
-        <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
-          <Icon name="delete" size={30} color="red" />
-        </TouchableOpacity>
-      )}
-      {isSelected && <View style={styles.selectedOverlay} />}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
+    marginVertical: 10,
     flexDirection: 'row',
-    margin: 5,
     padding: 10,
     backgroundColor: 'white',
     borderRadius: 20,
