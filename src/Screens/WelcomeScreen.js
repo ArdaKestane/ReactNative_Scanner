@@ -9,6 +9,7 @@ import {
   Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import I18n from '../I18n';
 
 const {height} = Dimensions.get('window');
 
@@ -23,15 +24,10 @@ const WelcomeScreen = ({handlePress}) => {
         />
       </View>
       <View style={styles.contentContainer}>
-        <Text style={styles.header}>
-          Organize & save {'\n'}all your receipts
-        </Text>
-        <Text style={styles.text}>
-          Document all your payments and {'\n'}
-          receipts easily and simply.{' '}
-        </Text>
+        <Text style={styles.header}>{I18n.t('organizeSave')}</Text>
+        <Text style={styles.text}>{I18n.t('documentPayments')}</Text>
         <View style={styles.startContainer}>
-          <Text style={styles.startText}>Let's start!</Text>
+          <Text style={styles.startText}>{I18n.t('letsStart')}</Text>
           <TouchableOpacity style={styles.startButton} onPress={handlePress}>
             <View style={styles.startInnerContainer}>
               <Icon name="arrow-forward-outline" style={styles.icon} />
@@ -90,7 +86,7 @@ const styles = StyleSheet.create({
   },
   startContainer: {
     flexDirection: 'row',
-    marginTop: 50,
+    marginTop: 30,
     borderWidth: 1,
     borderRadius: 50,
     height: 60,

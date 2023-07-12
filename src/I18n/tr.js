@@ -11,4 +11,8 @@ export default {
   receipts: 'fiş ile',
   close: 'Kapat',
   extractedText: 'Çıkarılan Metin',
+  organizeSave: 'Fişlerinizi düzenleyin ve kaydedin',
+  documentPayments:
+    'Tüm ödemelerinizi ve \nfişlerinizi kolayca ve basitçe kaydedin.',
+  letsStart: 'Hadi başlayalım!',
 };
