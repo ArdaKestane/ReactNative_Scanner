@@ -9,16 +9,15 @@ import {
   KeyboardAvoidingView,
   Image,
   Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {YellowBox} from 'react-native';
 import I18n from '../I18n';
-
-YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 
 const EditComponentScreen = ({component, onSave, onCancel}) => {
   const [editedComponent, setEditedComponent] = useState({...component});
   const [selectedType, setSelectedType] = useState(null);
+  const [imageModalVisible, setImageModalVisible] = useState(false);
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -79,16 +78,26 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
     onCancel();
   };
 
+  const handleImagePress = () => {
+    setImageModalVisible(true);
+  };
+
+  const handleImageModalClose = () => {
+    setImageModalVisible(false);
+  };
+
   return (
     <Modal animationType="slide" transparent={false} visible={true}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{uri: component.image}}
-            style={styles.fullImage}
-            resizeMode="contain"
-          />
-        </View>
+      <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={handleImagePress}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={{uri: component.image}}
+              style={styles.fullImage}
+              resizeMode="contain"
+            />
+          </View>
+        </TouchableWithoutFeedback>
         <Text style={styles.label}>{I18n.t('category')}:</Text>
         <DropDownPicker
           open={open}
@@ -113,23 +122,40 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
           onChangeText={value => handleInputChange('amount', value)}
           keyboardType="numeric"
         />
-
         <Text style={styles.label}>{I18n.t('date')}:</Text>
         <Text style={styles.value}>{editedComponent.date}</Text>
-
         <Text style={styles.label}>{I18n.t('extractedText')}:</Text>
-        <Text style={styles.value}>{editedComponent.extractedText}</Text>
-
+        <ScrollView style={styles.textInputContainer}>
+          <TextInput
+            editable={false}
+            multiline={true}
+            numberOfLines={3}
+            style={styles.textInput}>
+            {editedComponent.extractedText}
+          </TextInput>
+        </ScrollView>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={onCancel}>
             <Text style={styles.buttonText}>{I18n.t('cancel')}</Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.button} onPress={handleSave}>
             <Text style={styles.buttonText}>{I18n.t('save')}</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+        {imageModalVisible && (
+          <Modal animationType="fade" transparent={true} visible={true}>
+            <TouchableWithoutFeedback onPress={handleImageModalClose}>
+              <View style={styles.imageModalContainer}>
+                <Image
+                  source={{uri: component.image}}
+                  style={styles.fullImageModal}
+                  resizeMode="contain"
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+        )}
+      </View>
     </Modal>
   );
 };
@@ -137,9 +163,6 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  scrollContainer: {
-    flexGrow: 1,
     padding: 16,
   },
   label: {
@@ -176,11 +199,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     fontFamily: 'Ruda-Bold',
   },
-  dropdownIcon: {
-    width: 40,
-    height: 40,
-    marginRight: 8,
-  },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -202,9 +220,35 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   fullImage: {
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
+    borderRadius: 10,
     alignSelf: 'center',
+  },
+  textInputContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    marginBottom: 16,
+  },
+  textInput: {
+    padding: 8,
+    fontFamily: 'Ruda-Regular',
+  },
+  imageModalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  fullImageModal: {
+    width: '75%',
+    height: '75%',
+    alignSelf: 'center',
+  },
+  dropdownIcon: {
+    width: 40,
+    height: 40,
+    marginRight: 8,
   },
 });
 

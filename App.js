@@ -180,7 +180,7 @@ function App() {
           <EditComponentScreen
             component={selectedComponent}
             onSave={handleSaveComponent}
-            onCancel={() => setActiveScreen('receipt')}
+            onCancel={() => setActiveScreen('home')}
           />
         );
       default:
@@ -230,6 +230,7 @@ function App() {
     } else {
       // Create new component
       updatedComponents = [...componentsData, updatedComponent];
+      setActiveScreen('receipt');
     }
 
     console.log('updatedComponents', updatedComponents);
