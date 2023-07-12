@@ -16,9 +16,7 @@ export default {
   amount: 'Amount',
   deleteSelected: 'Delete Selected',
   monthlySummary: 'Monthly Summary',
-  spent: 'Spent',
-  withTotalOf: 'With a total of',
-  receipts: 'receipts',
+  with: 'With a total of',
   close: 'Close',
   extractedText: 'Extracted Text',
 };
