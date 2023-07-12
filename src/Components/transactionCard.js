@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
+import I18n from '../I18n';
 
 const TransactionCard = ({type, amount, maxAmount}) => {
   // Calculate the progress percentage based on the maximum amount
@@ -30,7 +31,7 @@ const TransactionCard = ({type, amount, maxAmount}) => {
         <Image style={styles.circleImage} source={imageSource} />
       </View>
       <View style={styles.rightColumn}>
-        <Text style={styles.title}>{type}</Text>
+        <Text style={styles.title}>{I18n.t(type)}</Text>
         <View style={styles.row}>
           <View style={styles.progressBarContainer}>
             <View

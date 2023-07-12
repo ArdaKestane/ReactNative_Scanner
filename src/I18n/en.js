@@ -19,4 +19,7 @@ export default {
   with: 'With a total of',
   close: 'Close',
   extractedText: 'Extracted Text',
+  Taxi: 'Taxi',
+  Grocery: 'Grocery',
+  Healthcare: 'Healthcare',
 };

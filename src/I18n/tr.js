@@ -21,4 +21,7 @@ export default {
   receipts: 'fiş ile',
   transactions: 'İşlemler',
   seeAll: 'Hepsini görüntüle',
+  Taxi: 'Taksi',
+  Grocery: 'Market',
+  Healthcare: 'Sağlık',
 };
