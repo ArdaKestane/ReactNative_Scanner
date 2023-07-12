@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {YellowBox} from 'react-native';
+import I18n from '../I18n';
 
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 
@@ -23,7 +24,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
     {
-      label: 'Taxi',
+      label: I18n.t('taxi'),
       value: 'Taxi',
       icon: () => (
         <Image
@@ -33,7 +34,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
       ),
     },
     {
-      label: 'Grocery',
+      label: I18n.t('grocery'),
       value: 'Grocery',
       icon: () => (
         <Image
@@ -43,7 +44,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
       ),
     },
     {
-      label: 'Healthcare',
+      label: I18n.t('healthcare'),
       value: 'Healthcare',
       icon: () => (
         <Image
@@ -88,7 +89,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
             resizeMode="contain"
           />
         </View>
-        <Text style={styles.label}>Category:</Text>
+        <Text style={styles.label}>{I18n.t('category')}:</Text>
         <DropDownPicker
           open={open}
           value={value}
@@ -105,7 +106,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
           itemStyle={styles.dropdownItem}
         />
 
-        <Text style={styles.label}>Amount:</Text>
+        <Text style={styles.label}>{I18n.t('amount')}:</Text>
         <TextInput
           style={styles.input}
           value={editedComponent.amount ? String(editedComponent.amount) : ''}
@@ -113,19 +114,19 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
           keyboardType="numeric"
         />
 
-        <Text style={styles.label}>Date:</Text>
+        <Text style={styles.label}>{I18n.t('date')}:</Text>
         <Text style={styles.value}>{editedComponent.date}</Text>
 
-        <Text style={styles.label}>Extracted Text:</Text>
+        <Text style={styles.label}>{I18n.t('extractedText')}:</Text>
         <Text style={styles.value}>{editedComponent.extractedText}</Text>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={onCancel}>
-            <Text style={styles.buttonText}>Cancel</Text>
+            <Text style={styles.buttonText}>{I18n.t('cancel')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={handleSave}>
-            <Text style={styles.buttonText}>Save</Text>
+            <Text style={styles.buttonText}>{I18n.t('save')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

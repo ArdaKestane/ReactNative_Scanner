@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import I18n from '../I18n';
 
 const ReceiptCard = ({component, image, onPress, onDelete, isSelected}) => {
   const {type, amount, date} = component;
@@ -41,14 +42,16 @@ const ReceiptCard = ({component, image, onPress, onDelete, isSelected}) => {
         <Image style={styles.circleImage} source={imageSource} />
       </View>
       <View style={styles.rightColumn}>
-        <Text style={styles.title}>Tarih: {date}</Text>
         <Text style={styles.title}>
-          Tutar:{' '}
+          {I18n.t('date')}: {date}
+        </Text>
+        <Text style={styles.title}>
+          {I18n.t('amount')}:{' '}
           {amount !== undefined && amount !== null
             ? amount.toString().length <= 10
               ? amount.toString()
               : amount.toString().substring(0, 10) + '...'
-            : 'N/A'}
+            : I18n.t('notAvailable')}
         </Text>
       </View>
       {deleting ? (

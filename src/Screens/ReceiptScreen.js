@@ -92,7 +92,7 @@ const ReceiptScreen = ({
       date: formattedDate,
       image: `https://picsum.photos/200?random=${Date.now()}`,
       amount: randomAmount,
-      extractedText: 'Mock component',
+      extractedText: I18n.t('mockComponent'),
       type: randomType,
     };
 
