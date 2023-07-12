@@ -42,16 +42,18 @@ const ReceiptCard = ({component, image, onPress, onDelete, isSelected}) => {
         <Image style={styles.circleImage} source={imageSource} />
       </View>
       <View style={styles.rightColumn}>
-        <Text style={styles.title}>
-          {I18n.t('date')}: {date}
+        <Text style={styles.heading}>
+          {I18n.t('date')}: <Text style={styles.value}>{date}</Text>
         </Text>
-        <Text style={styles.title}>
+        <Text style={styles.heading}>
           {I18n.t('amount')}:{' '}
-          {amount !== undefined && amount !== null
-            ? amount.toString().length <= 10
-              ? amount.toString()
-              : amount.toString().substring(0, 10) + '...'
-            : I18n.t('notAvailable')}
+          <Text style={styles.value}>
+            {amount !== undefined && amount !== null
+              ? amount.toString().length <= 10
+                ? amount.toString()
+                : amount.toString().substring(0, 10) + '...'
+              : I18n.t('notAvailable')}
+          </Text>
         </Text>
       </View>
       {deleting ? (
@@ -88,10 +90,13 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 50,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  heading: {
+    fontSize: 16,
     marginBottom: 5,
+    fontFamily: 'Ruda-ExtraBold',
+  },
+  value: {
+    fontFamily: 'Ruda-Regular',
   },
   deleteButton: {
     borderRadius: 5,
