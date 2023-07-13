@@ -28,10 +28,6 @@ function App() {
   const isWelcomePageShown = useSelector(state => state.isWelcomePageShown);
   const selectedComponent = useSelector(state => state.selectedComponent);
 
-  const handleWelcomePageDismiss = () => {
-    dispatch(setWelcomePageShown(true));
-  };
-
   useEffect(() => {
     loadComponentsData();
   }, []);
@@ -165,7 +161,7 @@ function App() {
   };
 
   return !isWelcomePageShown ? (
-    <WelcomeScreen handlePress={handleWelcomePageDismiss} />
+    <WelcomeScreen />
   ) : (
     <NavigationContainer>
       <View style={styles.container}>

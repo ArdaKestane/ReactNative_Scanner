@@ -8,13 +8,15 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import I18n from '../I18n';
 import {useDispatch} from 'react-redux';
-import {setWelcomePageShown} from '../redux/action';
+import {setActiveScreen, setWelcomePageShown} from '../redux/action';
 import CheckBox from '@react-native-community/checkbox';
-import RNFS from 'react-native-fs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {height} = Dimensions.get('window');
 
@@ -24,8 +26,44 @@ if (I18n.defaultLocale === 'tr') {
   marginTop = 30;
 }
 
-const WelcomeScreen = ({handlePress}) => {
+const WelcomeScreen = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchRegistrationData();
+  }, []);
+
+  const fetchRegistrationData = async () => {
+    try {
+      // Retrieve registration data from AsyncStorage
+      const data = await AsyncStorage.getItem('registrationData');
+      if (data) {
+        const parsedData = JSON.parse(data);
+        console.log('Registration data:', parsedData);
+      }
+    } catch (error) {
+      console.log('Error retrieving registration data:', error);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      const data = await AsyncStorage.getItem('registrationData');
+      if (data) {
+        const parsedData = JSON.parse(data);
+        const matchingUser = parsedData.find(
+          user => user.username === username && user.password === password,
+        );
+        if (matchingUser) {
+          dispatch(setWelcomePageShown(true));
+        } else {
+          Alert.alert('Invalid credentials');
+        }
+      }
+    } catch (error) {
+      console.log('Error retrieving registration data:', error);
+    }
+  };
 
   useEffect(() => {
     dispatch(setWelcomePageShown());
@@ -33,20 +71,75 @@ const WelcomeScreen = ({handlePress}) => {
 
   const [rememberMe, setRememberMe] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const saveRegistrationData = async () => {
+    const userData = {
+      username,
+      password,
+      email,
+    };
+
+    try {
+      // Retrieve existing registration data from AsyncStorage
+      const data = await AsyncStorage.getItem('registrationData');
+      let parsedData = [];
+
+      if (data) {
+        parsedData = JSON.parse(data);
+        if (!Array.isArray(parsedData)) {
+          parsedData = [];
+        }
+      }
+
+      // Update registration data with new user
+      parsedData.push(userData);
+
+      // Save updated registration data to AsyncStorage
+      await AsyncStorage.setItem(
+        'registrationData',
+        JSON.stringify(parsedData),
+      );
+      console.log('Registration data saved successfully');
+    } catch (error) {
+      console.log('Error saving registration data:', error);
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const renderLoginForm = () => (
     <View style={styles.formContainer}>
       <View style={styles.formGroup}>
         <Icon name="person" size={20} style={styles.inputIcon} />
-        <TextInput style={styles.input} placeholder="Username" />
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          onChangeText={setUsername}
+        />
       </View>
       <View style={styles.formGroup}>
         <Icon name="lock-closed" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
           placeholder="Password"
-          secureTextEntry={true}
+          secureTextEntry={!showPassword}
+          onChangeText={setPassword}
         />
+        <TouchableOpacity
+          style={styles.passwordVisibilityIcon}
+          onPress={togglePasswordVisibility}>
+          <Icon
+            name={showPassword ? 'eye-off' : 'eye'}
+            size={20}
+            color="gray"
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.checkboxContainer}>
         <CheckBox
@@ -56,7 +149,7 @@ const WelcomeScreen = ({handlePress}) => {
         />
         <Text style={styles.checkboxLabel}>Remember me</Text>
       </View>
-      <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
     </View>
@@ -66,50 +159,81 @@ const WelcomeScreen = ({handlePress}) => {
     <View style={styles.formContainer}>
       <View style={styles.formGroup}>
         <Icon name="person" size={20} style={styles.inputIcon} />
-        <TextInput style={styles.input} placeholder="Username" />
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          onChangeText={setUsername}
+        />
       </View>
       <View style={styles.formGroup}>
         <Icon name="lock-closed" size={20} style={styles.inputIcon} />
-        <TextInput style={styles.input} placeholder="Password" />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          onChangeText={setPassword}
+        />
       </View>
       <View style={styles.formGroup}>
         <Icon name="mail" size={20} style={styles.inputIcon} />
-        <TextInput style={styles.input} placeholder="Email" />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={setEmail}
+        />
       </View>
-      <TouchableOpacity style={styles.registerButton}>
+      <TouchableOpacity
+        style={styles.registerButton}
+        onPress={saveRegistrationData}>
         <Text style={styles.registerButtonText}>Register</Text>
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.background} source={require('../Assets/bg.png')} />
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={require('../Assets/welcoming.png')}
-        />
-      </View>
-      <View style={styles.contentContainer}>
-        {isLogin ? renderLoginForm() : renderRegisterForm()}
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.loginTabButton}
-          onPress={() => setIsLogin(true)}>
-          <Text style={isLogin ? styles.activeButtonText : styles.buttonText}>
-            Login
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.registerTabButton}
-          onPress={() => setIsLogin(false)}>
-          <Text style={!isLogin ? styles.activeButtonText : styles.buttonText}>
-            Register
-          </Text>
-        </TouchableOpacity>
-      </View>
+    <View style={{flex: 1}}>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'position' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 70}>
+        <ScrollView
+          style={{flex: 1}}
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled">
+          <Image
+            style={styles.background}
+            source={require('../Assets/bg.png')}
+          />
+          <View style={styles.contentContainer}>
+            <View style={styles.imageContainer}>
+              <Image
+                style={styles.image}
+                source={require('../Assets/welcoming.png')}
+              />
+            </View>
+            {isLogin ? renderLoginForm() : renderRegisterForm()}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.loginTabButton}
+                onPress={() => setIsLogin(true)}>
+                <Text
+                  style={isLogin ? styles.activeButtonText : styles.buttonText}>
+                  Login
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.registerTabButton}
+                onPress={() => setIsLogin(false)}>
+                <Text
+                  style={
+                    !isLogin ? styles.activeButtonText : styles.buttonText
+                  }>
+                  Register
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -118,7 +242,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
-    alignItems: 'center',
+  },
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
   },
   background: {
@@ -127,26 +253,25 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
   imageContainer: {
-    position: 'absolute',
-    top: 20,
     aspectRatio: 1,
     width: '70%',
     overflow: 'hidden',
+    marginBottom: 20,
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
   },
-  contentContainer: {
-    position: 'absolute',
-    top: height * 0.42,
-    width: '100%',
-    paddingHorizontal: 20,
-  },
   formContainer: {
     marginTop: 20,
+    width: '100%',
   },
   formGroup: {
     flexDirection: 'row',
@@ -164,6 +289,11 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     paddingHorizontal: 10,
+  },
+  passwordVisibilityIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -194,14 +324,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
-    position: 'absolute',
-    top: height * 0.82,
-    marginHorizontal: 20,
     alignItems: 'center',
+    width: '100%',
   },
   loginTabButton: {
     paddingHorizontal: 20,
-    width: '50%',
+    flex: 1,
     paddingVertical: 10,
     backgroundColor: '#F2EAD3',
     borderTopLeftRadius: 20,
@@ -212,7 +340,7 @@ const styles = StyleSheet.create({
   },
   registerTabButton: {
     paddingHorizontal: 20,
-    width: '50%',
+    flex: 1,
     height: 55,
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20,
