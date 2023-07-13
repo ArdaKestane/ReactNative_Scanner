@@ -11,7 +11,7 @@ import {
 import I18n from '../I18n';
 import TransactionCard from '../Components/transactionCard';
 
-const HomeScreen = ({componentsData}) => {
+const HomeScreen = ({componentsData, onPress}) => {
   const [loading, setLoading] = useState(true);
   const [totalReceipts, setTotalReceipts] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -92,7 +92,9 @@ const HomeScreen = ({componentsData}) => {
         <View style={styles.transactionHeaders}>
           <Text style={styles.heading}>{I18n.t('transactions')}</Text>
           <TouchableOpacity>
-            <Text style={styles.seeAll}>{I18n.t('seeAll')}</Text>
+            <Text onPress={onPress} style={styles.seeAll}>
+              {I18n.t('seeAll')}
+            </Text>
           </TouchableOpacity>
         </View>
         <TransactionCard type="Taxi" amount={taxiAmount} maxAmount={200} />

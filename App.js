@@ -170,7 +170,12 @@ function App() {
   const renderScreen = () => {
     switch (activeScreen) {
       case 'home':
-        return <HomeScreen componentsData={componentsData} />;
+        return (
+          <HomeScreen
+            onPress={() => setActiveScreen('receipt')}
+            componentsData={componentsData}
+          />
+        );
       case 'receipt':
         return renderReceiptScreen();
       case 'camera':

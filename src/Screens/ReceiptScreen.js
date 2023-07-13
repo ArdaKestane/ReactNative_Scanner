@@ -13,6 +13,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import I18n from '../I18n';
 import ReceiptCard from '../Components/receiptCard';
 import {SwipeListView} from 'react-native-swipe-list-view';
+import {YellowBox} from 'react-native';
+
+YellowBox.ignoreWarnings([
+  'VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality',
+]);
 
 const ReceiptScreen = ({
   componentsData,
@@ -121,13 +126,13 @@ const ReceiptScreen = ({
   );
 
   const renderHiddenItem = (data, rowMap) => (
-    <View style={styles.rowBack}>
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => onDeleteComponent(data.item)}>
+    <TouchableOpacity
+      style={styles.rowBack}
+      onPress={() => onDeleteComponent(data.item)}>
+      <View style={styles.rowBack}>
         <Icon name="delete" size={24} color="white" />
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -149,6 +154,7 @@ const ReceiptScreen = ({
               previewRowKey={'0'}
               previewOpenValue={-40}
               previewOpenDelay={3000}
+              closeOnRowPress={true}
             />
             {selectedComponents.length > 0 && (
               <TouchableOpacity
