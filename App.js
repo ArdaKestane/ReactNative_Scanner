@@ -9,24 +9,30 @@ import TextRecognition from 'react-native-text-recognition';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 import EditComponentScreen from './src/Screens/EditComponentScreen';
+import {useSelector, useDispatch, Provider} from 'react-redux';
+import {createStore} from 'redux';
+import reducer from './src/redux/reducer';
+import {
+  setComponentsData,
+  setActiveScreen,
+  setSelectedComponent,
+  setWelcomePageShown,
+  setScannedImage,
+} from './src/redux/action';
+
+const store = createStore(reducer);
 
 function App() {
-  const [activeScreen, setActiveScreen] = useState('Home');
-  const [scannedImage, setScannedImage] = useState(null);
-  const [componentsData, setComponentsData] = useState([]);
-  const [selectedComponent, setSelectedComponent] = useState(null);
-  const [isWelcomePageShown, setIsWelcomePageShown] = useState(true);
+  const dispatch = useDispatch();
+  const activeScreen = useSelector(state => state.activeScreen);
+  const isWelcomePageShown = useSelector(state => state.isWelcomePageShown);
+  const selectedComponent = useSelector(state => state.selectedComponent);
 
   const handleWelcomePageDismiss = () => {
-    setIsWelcomePageShown(false);
+    dispatch(setWelcomePageShown(true));
   };
 
   useEffect(() => {
-    setActiveScreen('home');
-  }, []);
-
-  useEffect(() => {
-    // Load components data from storage only at start
     loadComponentsData();
   }, []);
 
@@ -35,46 +41,12 @@ function App() {
       const storedData = await AsyncStorage.getItem('componentsData');
       if (storedData) {
         const parsedData = JSON.parse(storedData);
-        setComponentsData(parsedData);
+        dispatch(setComponentsData(parsedData));
       } else {
-        setComponentsData([]);
+        dispatch(setComponentsData([]));
       }
     } catch (error) {
       console.error('Error loading components:', error);
-    }
-  };
-
-  const saveComponentsData = async data => {
-    try {
-      await AsyncStorage.setItem('componentsData', JSON.stringify(data));
-    } catch (error) {
-      console.error('Error saving components:', error);
-    }
-  };
-
-  useEffect(() => {
-    // when selectedComponent state variable changes cleanup function
-    if (selectedComponent) {
-      return () => {
-        setSelectedComponent(null);
-      };
-    }
-  }, [selectedComponent]);
-
-  const handleComponentPress = component => {
-    setSelectedComponent(component);
-  };
-
-  const handleDeleteComponent = async component => {
-    const updatedComponents = componentsData.filter(c => c !== component);
-    setComponentsData(updatedComponents);
-    try {
-      await AsyncStorage.setItem(
-        'componentsData',
-        JSON.stringify(updatedComponents),
-      );
-    } catch (error) {
-      console.error('Error saving components:', error);
     }
   };
 
@@ -133,7 +105,7 @@ function App() {
   };
 
   const handleDocumentScanned = async image => {
-    setScannedImage(image);
+    dispatch(setScannedImage(image));
 
     const [amount, extractedText] = await amountAlgorithm(image);
 
@@ -151,10 +123,11 @@ function App() {
         type: randomType,
       };
 
-      setScannedImage(null);
+      dispatch(setScannedImage(null));
 
-      setSelectedComponent(newComponent);
+      dispatch(setSelectedComponent(newComponent));
       renderEditComponentScreen();
+      dispatch(setActiveScreen('receipt'));
     } catch (error) {
       console.error('Error recognizing text:', error);
     }
@@ -170,24 +143,11 @@ function App() {
   const renderScreen = () => {
     switch (activeScreen) {
       case 'home':
-        return (
-          <HomeScreen
-            onPress={() => setActiveScreen('receipt')}
-            componentsData={componentsData}
-          />
-        );
+        return <HomeScreen />;
       case 'receipt':
         return renderReceiptScreen();
       case 'camera':
         return <CameraScreen onDocumentScanned={handleDocumentScanned} />;
-      case 'edit':
-        return (
-          <EditComponentScreen
-            component={selectedComponent}
-            onSave={handleSaveComponent}
-            onCancel={() => setActiveScreen('home')}
-          />
-        );
       default:
         return null;
     }
@@ -195,67 +155,16 @@ function App() {
 
   const renderEditComponentScreen = () => {
     if (selectedComponent) {
-      return (
-        <EditComponentScreen
-          component={selectedComponent}
-          onSave={handleSaveComponent}
-          onCancel={() => setSelectedComponent(null)}
-        />
-      );
+      return <EditComponentScreen />;
     }
     return null;
   };
 
   const renderReceiptScreen = () => {
-    return (
-      <ReceiptScreen
-        componentsData={componentsData}
-        onComponentPress={handleComponentPress}
-        onDeleteComponent={handleDeleteComponent}
-        onAddMockComponent={handleAddMockComponent}
-      />
-    );
+    return <ReceiptScreen />;
   };
 
-  const handleSaveComponent = async updatedComponent => {
-    let updatedComponents;
-
-    const existingComponentIndex = componentsData.findIndex(
-      component => component.id === updatedComponent.id,
-    );
-
-    if (existingComponentIndex !== -1) {
-      // Update existing component
-      updatedComponents = componentsData.map(component => {
-        if (component.id === updatedComponent.id) {
-          return updatedComponent;
-        }
-        return component;
-      });
-    } else {
-      // Create new component
-      updatedComponents = [...componentsData, updatedComponent];
-      setActiveScreen('receipt');
-    }
-
-    console.log('updatedComponents', updatedComponents);
-    setComponentsData(updatedComponents);
-    await saveComponentsData(updatedComponents);
-    renderReceiptScreen(); // Wait for saving components to AsyncStorage
-  };
-
-  const handleAddMockComponent = mockComponent => {
-    const updatedComponents = [...componentsData, mockComponent];
-    setComponentsData(updatedComponents);
-
-    try {
-      saveComponentsData(updatedComponents);
-    } catch (error) {
-      console.error('Error saving components:', error);
-    }
-  };
-
-  return isWelcomePageShown ? (
+  return !isWelcomePageShown ? (
     <WelcomeScreen handlePress={handleWelcomePageDismiss} />
   ) : (
     <NavigationContainer>
@@ -266,17 +175,17 @@ function App() {
         <View style={styles.tabBar}>
           <TouchableOpacity
             style={styles.tabButton}
-            onPress={() => setActiveScreen('home')}>
+            onPress={() => dispatch(setActiveScreen('home'))}>
             <Icon name="home" size={24} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.tabButton}
-            onPress={() => setActiveScreen('camera')}>
+            onPress={() => dispatch(setActiveScreen('camera'))}>
             <Icon name="camera" size={24} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.tabButton}
-            onPress={() => setActiveScreen('receipt')}>
+            onPress={() => dispatch(setActiveScreen('receipt'))}>
             <Icon name="receipt" size={24} color="white" />
           </TouchableOpacity>
         </View>
@@ -311,4 +220,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
