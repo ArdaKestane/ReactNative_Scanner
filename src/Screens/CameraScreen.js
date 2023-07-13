@@ -9,7 +9,7 @@ const CameraScreen = ({onDocumentScanned}) => {
 
       if (scannedImages.length > 0) {
         const image = scannedImages[0];
-        const extractedText = ''; // Temporarily set extractedText as an empty string
+        const extractedText = '';
         onDocumentScanned(image, extractedText);
       }
     } catch (error) {
@@ -21,11 +21,7 @@ const CameraScreen = ({onDocumentScanned}) => {
     scanDocument();
   }, []);
 
-  return (
-    <View style={{flex: 1, backgroundColor: '#EEEEEE'}}>
-      {/* Add your camera screen content here */}
-    </View>
-  );
+  return <View style={{flex: 1, backgroundColor: '#EEEEEE'}}></View>;
 };
 
 export default CameraScreen;

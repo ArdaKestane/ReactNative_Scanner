@@ -55,11 +55,11 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
   ]);
 
   useEffect(() => {
-    if (component.type) {
-      setValue(component.type);
-      setSelectedType(component.type);
+    if (editedComponent.type) {
+      setValue(editedComponent.type);
+      setSelectedType(editedComponent.type);
     }
-  }, [component.type]);
+  }, [editedComponent.type]);
 
   const handleInputChange = (field, value) => {
     setEditedComponent(prevState => ({
@@ -74,8 +74,13 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
       type: selectedType,
     };
 
-    await onSave(updatedComponent);
-    onCancel();
+    if (onSave) {
+      await onSave(updatedComponent);
+    }
+
+    if (onCancel) {
+      onCancel();
+    }
   };
 
   const handleImagePress = () => {
@@ -87,12 +92,12 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
   };
 
   return (
-    <Modal animationType="slide" transparent={false} visible={true}>
+    <Modal animationType="slide" transparent={false} visible={!!component}>
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={handleImagePress}>
           <View style={styles.imageContainer}>
             <Image
-              source={{uri: component.image}}
+              source={{uri: editedComponent.image}}
               style={styles.fullImage}
               resizeMode="contain"
             />
@@ -147,7 +152,7 @@ const EditComponentScreen = ({component, onSave, onCancel}) => {
             <TouchableWithoutFeedback onPress={handleImageModalClose}>
               <View style={styles.imageModalContainer}>
                 <Image
-                  source={{uri: component.image}}
+                  source={{uri: editedComponent.image}}
                   style={styles.fullImageModal}
                   resizeMode="contain"
                 />

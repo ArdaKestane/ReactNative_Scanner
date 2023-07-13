@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,10 +6,15 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  Button,
+  TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import I18n from '../I18n';
+import {useDispatch} from 'react-redux';
+import {setWelcomePageShown} from '../redux/action';
+import CheckBox from '@react-native-community/checkbox';
+import RNFS from 'react-native-fs';
 
 const {height} = Dimensions.get('window');
 
@@ -20,6 +25,63 @@ if (I18n.defaultLocale === 'tr') {
 }
 
 const WelcomeScreen = ({handlePress}) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setWelcomePageShown());
+  }, [dispatch]);
+
+  const [rememberMe, setRememberMe] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
+  const renderLoginForm = () => (
+    <View style={styles.formContainer}>
+      <View style={styles.formGroup}>
+        <Icon name="person" size={20} style={styles.inputIcon} />
+        <TextInput style={styles.input} placeholder="Username" />
+      </View>
+      <View style={styles.formGroup}>
+        <Icon name="lock-closed" size={20} style={styles.inputIcon} />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry={true}
+        />
+      </View>
+      <View style={styles.checkboxContainer}>
+        <CheckBox
+          value={rememberMe}
+          onValueChange={setRememberMe}
+          style={styles.checkbox}
+        />
+        <Text style={styles.checkboxLabel}>Remember me</Text>
+      </View>
+      <TouchableOpacity style={styles.loginButton}>
+        <Text style={styles.loginButtonText}>Login</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  const renderRegisterForm = () => (
+    <View style={styles.formContainer}>
+      <View style={styles.formGroup}>
+        <Icon name="person" size={20} style={styles.inputIcon} />
+        <TextInput style={styles.input} placeholder="Username" />
+      </View>
+      <View style={styles.formGroup}>
+        <Icon name="lock-closed" size={20} style={styles.inputIcon} />
+        <TextInput style={styles.input} placeholder="Password" />
+      </View>
+      <View style={styles.formGroup}>
+        <Icon name="mail" size={20} style={styles.inputIcon} />
+        <TextInput style={styles.input} placeholder="Email" />
+      </View>
+      <TouchableOpacity style={styles.registerButton}>
+        <Text style={styles.registerButtonText}>Register</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Image style={styles.background} source={require('../Assets/bg.png')} />
@@ -30,16 +92,23 @@ const WelcomeScreen = ({handlePress}) => {
         />
       </View>
       <View style={styles.contentContainer}>
-        <Text style={styles.header}>{I18n.t('organizeSave')}</Text>
-        <Text style={styles.text}>{I18n.t('documentPayments')}</Text>
-        <View style={styles.startContainer}>
-          <Text style={styles.startText}>{I18n.t('letsStart')}</Text>
-          <TouchableOpacity style={styles.startButton} onPress={handlePress}>
-            <View style={styles.startInnerContainer}>
-              <Icon name="arrow-forward-outline" style={styles.icon} />
-            </View>
-          </TouchableOpacity>
-        </View>
+        {isLogin ? renderLoginForm() : renderRegisterForm()}
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.loginTabButton}
+          onPress={() => setIsLogin(true)}>
+          <Text style={isLogin ? styles.activeButtonText : styles.buttonText}>
+            Login
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.registerTabButton}
+          onPress={() => setIsLogin(false)}>
+          <Text style={!isLogin ? styles.activeButtonText : styles.buttonText}>
+            Register
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -72,62 +141,107 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     position: 'absolute',
-    top: height * 0.45,
+    top: height * 0.42,
     width: '100%',
     paddingHorizontal: 20,
   },
-  header: {
+  formContainer: {
     marginTop: 20,
-    fontSize: 38,
-    fontFamily: 'Ruda-ExtraBold',
-    textAlign: 'left',
-    color: 'black',
   },
-  text: {
-    fontSize: 15,
-    fontFamily: 'Ruda-Regular',
-    marginTop: 20,
-    textAlign: 'left',
-    color: '#7C7C7C',
-  },
-  startContainer: {
-    flexDirection: 'row',
-    marginTop: marginTop,
-    borderWidth: 1,
-    borderRadius: 50,
-    height: 60,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingLeft: 20,
-    backgroundColor: 'white',
-  },
-  startButton: {
-    alignSelf: 'flex-end',
-    height: 58,
+  formGroup: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  startInnerContainer: {
+    marginBottom: 20,
     borderWidth: 1,
-    borderRadius: 50,
-    height: 58,
-    width: 100,
-    alignSelf: 'flex-end',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    borderColor: 'grey',
+  },
+  inputIcon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    paddingHorizontal: 10,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFD0',
+    marginBottom: 10,
   },
-  startText: {
-    fontSize: 18,
-    fontFamily: 'Ruda-Bold',
-    textAlign: 'left',
-    color: 'black',
-  },
-  icon: {
+  checkbox: {
     marginRight: 5,
-    fontSize: 24,
+  },
+  checkboxLabel: {
+    fontSize: 14,
+    fontFamily: 'Ruda-Regular',
     color: 'black',
+  },
+  loginButton: {
+    height: 40,
+    backgroundColor: '#F1D4E5',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loginButtonText: {
+    fontSize: 16,
+    fontFamily: 'Ruda-ExtraBold',
+    color: 'black',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    position: 'absolute',
+    top: height * 0.82,
+    marginHorizontal: 20,
+    alignItems: 'center',
+  },
+  loginTabButton: {
+    paddingHorizontal: 20,
+    width: '50%',
+    paddingVertical: 10,
+    backgroundColor: '#F2EAD3',
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+    height: 55,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  registerTabButton: {
+    paddingHorizontal: 20,
+    width: '50%',
+    height: 55,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    paddingVertical: 10,
+    backgroundColor: '#DFD7BF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontFamily: 'Ruda-Regular',
+    color: 'black',
+  },
+  activeButtonText: {
+    fontSize: 16,
+    fontFamily: 'Ruda-Black',
+    color: 'black',
+  },
+  registerButton: {
+    height: 40,
+    backgroundColor: '#9C8FE6',
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  registerButtonText: {
+    fontSize: 16,
+    fontFamily: 'Ruda-ExtraBold',
+    color: 'white',
   },
 });
 

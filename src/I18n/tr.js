@@ -14,7 +14,7 @@ export default {
   organizeSave: 'Fişlerinizi düzenleyin ve kaydedin',
   documentPayments:
     'Tüm ödemelerinizi ve \nfişlerinizi kolayca ve basitçe kaydedin.',
-  letsStart: 'Hadi başlayalım!',
+  letsStart: 'İleri',
   greeting: 'Merhaba, {{name}}',
   with: 'Toplam ',
   transactions: 'İşlemler',

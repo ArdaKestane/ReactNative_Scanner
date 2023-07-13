@@ -9,6 +9,12 @@ const TransactionCard = ({type, amount, maxAmount}) => {
   // Ensure the progress doesn't exceed 100% or go below 0%
   const clampedProgress = Math.max(0, Math.min(progress, 100));
 
+  // Limit the displayed amount to the maximum amount with ellipsis
+  const displayedAmount =
+    amount > maxAmount
+      ? `${Math.floor(amount).toString().substring(0, 5).replace('.', '')}...`
+      : amount.toFixed(2);
+
   // Define the image source based on the transaction type
   let imageSource;
   switch (type) {
@@ -38,7 +44,7 @@ const TransactionCard = ({type, amount, maxAmount}) => {
               style={[styles.progressBar, {width: `${clampedProgress}%`}]}
             />
           </View>
-          <Text style={styles.amountText}>₺ {amount.toFixed(2)}</Text>
+          <Text style={styles.amountText}>₺ {displayedAmount}</Text>
         </View>
       </View>
     </View>
@@ -50,6 +56,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 10,
     padding: 10,
+    paddingRight: 20,
     backgroundColor: 'white',
     borderRadius: 50,
   },

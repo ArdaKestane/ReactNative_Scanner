@@ -1,24 +1,15 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {connect} from 'react-redux';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import I18n from '../I18n';
 
-const ReceiptCard = ({component, image, onPress, onDelete, isSelected}) => {
+import {deleteComponent} from '../redux/action';
+
+const ReceiptCard = ({component, onPress}) => {
   const {type, amount, date} = component;
-  const [deleting, setDeleting] = useState(false);
 
   const handleDelete = () => {
-    setDeleting(true);
-    setTimeout(() => {
-      onDelete(component);
-    }, 250); // Delay before calling onDelete
+    onDelete(component.id);
   };
 
   let imageSource;
@@ -91,12 +82,23 @@ const styles = StyleSheet.create({
   deleteButton: {
     borderRadius: 5,
     padding: 5,
+    backgroundColor: 'red',
   },
-  selectedOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    borderRadius: 50,
+  deleting: {
+    backgroundColor: 'red',
+    borderRadius: 5,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
-export default ReceiptCard;
+const mapStateToProps = state => ({
+  deleting: state.deleting,
+});
+
+const mapDispatchToProps = {
+  onDelete: deleteComponent,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReceiptCard);

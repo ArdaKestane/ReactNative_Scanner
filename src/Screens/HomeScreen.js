@@ -10,14 +10,19 @@ import {
 } from 'react-native';
 import I18n from '../I18n';
 import TransactionCard from '../Components/transactionCard';
+import {useSelector, useDispatch} from 'react-redux';
+import {setActiveScreen} from '../redux/action';
 
-const HomeScreen = ({componentsData, onPress}) => {
+const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const [totalReceipts, setTotalReceipts] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [taxiAmount, setTaxiAmount] = useState(0);
   const [groceryAmount, setGroceryAmount] = useState(0);
   const [healthcareAmount, setHealthcareAmount] = useState(0);
+  const componentsData = useSelector(state => state.componentsData);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -91,10 +96,9 @@ const HomeScreen = ({componentsData, onPress}) => {
       <View style={styles.transactionContainer}>
         <View style={styles.transactionHeaders}>
           <Text style={styles.heading}>{I18n.t('transactions')}</Text>
-          <TouchableOpacity>
-            <Text onPress={onPress} style={styles.seeAll}>
-              {I18n.t('seeAll')}
-            </Text>
+          <TouchableOpacity
+            onPress={() => dispatch(setActiveScreen('receipt'))}>
+            <Text style={styles.seeAll}>{I18n.t('seeAll')}</Text>
           </TouchableOpacity>
         </View>
         <TransactionCard type="Taxi" amount={taxiAmount} maxAmount={200} />

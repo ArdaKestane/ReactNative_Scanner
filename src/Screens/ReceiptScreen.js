@@ -1,33 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
-  Image,
   ScrollView,
   StyleSheet,
   ActivityIndicator,
   SafeAreaView,
+  LogBox,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import I18n from '../I18n';
 import ReceiptCard from '../Components/receiptCard';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {YellowBox} from 'react-native';
+import EditComponentScreen from './EditComponentScreen';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  deleteComponent,
+  addComponent,
+  setSelectedComponent,
+  saveComponent,
+} from '../redux/action';
 
-YellowBox.ignoreWarnings([
+LogBox.ignoreLogs([
   'VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality',
 ]);
 
-const ReceiptScreen = ({
-  componentsData,
-  onComponentPress,
-  onDeleteComponent,
-  onAddMockComponent,
-}) => {
+const ReceiptScreen = () => {
   const [loading, setLoading] = useState(true);
-  const [selectedComponents, setSelectedComponents] = useState([]);
-  const [deleting, setDeleting] = useState(false);
+  const [updatedComponent, setUpdatedComponent] = useState(null);
+
+  const dispatch = useDispatch();
+  const selectedComponent = useSelector(state => state.selectedComponent);
+  const componentsData = useSelector(state => state.componentsData);
 
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -36,54 +41,69 @@ const ReceiptScreen = ({
     return () => clearTimeout(delay);
   }, []);
 
-  const handleComponentPress = component => {
-    if (selectedComponents.length > 0) {
-      toggleComponentSelection(component);
-    } else {
-      onComponentPress(component);
-    }
-  };
-
-  const toggleComponentSelection = component => {
-    if (isComponentSelected(component)) {
-      setSelectedComponents(prevSelectedComponents =>
-        prevSelectedComponents.filter(c => c !== component),
+  const renderEditComponentScreen = () => {
+    if (selectedComponent) {
+      return (
+        <EditComponentScreen
+          component={selectedComponent}
+          onSave={handleSaveComponent}
+          onCancel={() => dispatch(setSelectedComponent(null))}
+        />
       );
-    } else {
-      setSelectedComponents(prevSelectedComponents => [
-        ...prevSelectedComponents,
-        component,
-      ]);
     }
+    return null;
   };
 
-  const isComponentSelected = component => {
-    return selectedComponents.includes(component);
+  const handleSaveComponent = component => {
+    dispatch(saveComponent(component));
   };
 
-  const handleDeleteSelectedComponents = () => {
-    setDeleting(true);
+  useEffect(() => {
+    if (updatedComponent) {
+      dispatch(saveComponent(updatedComponent));
+      setUpdatedComponent(null);
 
-    const delay = setTimeout(() => {
-      selectedComponents.forEach(component => {
-        onDeleteComponent(component);
-      });
-      setSelectedComponents([]);
-      setDeleting(false);
-    }, 250);
-
-    return () => clearTimeout(delay);
-  };
+      // Update the component in AsyncStorage
+      AsyncStorage.getItem('componentsData')
+        .then(data => {
+          if (data) {
+            const storedComponents = JSON.parse(data);
+            const updatedComponents = storedComponents.map(component => {
+              if (component.id === updatedComponent.id) {
+                return updatedComponent;
+              }
+              return component;
+            });
+            AsyncStorage.setItem(
+              'componentsData',
+              JSON.stringify(updatedComponents),
+            )
+              .then(() => {
+                console.log('Component updated in AsyncStorage.');
+              })
+              .catch(error => {
+                console.log('Error updating component in AsyncStorage:', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.log('Error retrieving components from AsyncStorage:', error);
+        });
+    }
+  }, [updatedComponent, dispatch]);
 
   const handleAddComponent = () => {
     const minAmount = 10;
     const maxAmount = 50;
+    const componentTypes = ['Taxi', 'Grocery', 'Healthcare'];
+
+    const mockComponents = [];
+
     const randomAmount = (
       Math.random() * (maxAmount - minAmount) +
       minAmount
     ).toFixed(2);
 
-    const componentTypes = ['Taxi', 'Grocery', 'Healthcare'];
     const randomType =
       componentTypes[Math.floor(Math.random() * componentTypes.length)];
 
@@ -102,7 +122,25 @@ const ReceiptScreen = ({
       type: randomType,
     };
 
-    onAddMockComponent(mockComponent);
+    mockComponents.push(mockComponent);
+
+    dispatch(addComponent(...mockComponents));
+
+    AsyncStorage.setItem(
+      'componentsData',
+      JSON.stringify([...componentsData, ...mockComponents]),
+    )
+      .then(() => {
+        console.log('Components saved to AsyncStorage.');
+      })
+      .catch(error => {
+        console.log('Error saving components to AsyncStorage:', error);
+      });
+  };
+
+  const handleCardPress = item => {
+    dispatch(setSelectedComponent(item));
+    renderEditComponentScreen(item);
   };
 
   const renderItem = ({item}) => (
@@ -118,17 +156,34 @@ const ReceiptScreen = ({
           ? require('../Assets/healthcare.png')
           : null
       }
-      onPress={() => handleComponentPress(item)}
-      onDelete={onDeleteComponent}
-      isSelected={isComponentSelected(item)}
-      deleting={deleting && isComponentSelected(item)}
+      onPress={() => handleCardPress(item)}
     />
   );
 
-  const renderHiddenItem = (data, rowMap) => (
+  const handleDeleteComponent = async componentId => {
+    try {
+      dispatch(deleteComponent(componentId));
+
+      const storedComponents = await AsyncStorage.getItem('componentsData');
+      if (storedComponents) {
+        const updatedComponents = JSON.parse(storedComponents).filter(
+          component => component.id !== componentId,
+        );
+        await AsyncStorage.setItem(
+          'componentsData',
+          JSON.stringify(updatedComponents),
+        );
+        console.log('Component removed from AsyncStorage.');
+      }
+    } catch (error) {
+      console.log('Error deleting component:', error);
+    }
+  };
+
+  const renderHiddenItem = data => (
     <TouchableOpacity
       style={styles.rowBack}
-      onPress={() => onDeleteComponent(data.item)}>
+      onPress={() => handleDeleteComponent(data.item.id)}>
       <View style={styles.rowBack}>
         <Icon name="delete" size={24} color="white" />
       </View>
@@ -143,33 +198,18 @@ const ReceiptScreen = ({
             <ActivityIndicator size="large" color="black" />
           </View>
         ) : (
-          <>
-            <SwipeListView
-              data={componentsData}
-              renderItem={renderItem}
-              renderHiddenItem={renderHiddenItem}
-              rightOpenValue={-75}
-              disableRightSwipe
-              keyExtractor={item => item.id}
-              previewRowKey={'0'}
-              previewOpenValue={-40}
-              previewOpenDelay={3000}
-              closeOnRowPress={true}
-            />
-            {selectedComponents.length > 0 && (
-              <TouchableOpacity
-                style={styles.deleteSelectedButton}
-                onPress={handleDeleteSelectedComponents}>
-                {deleting ? (
-                  <ActivityIndicator size="small" color="white" />
-                ) : (
-                  <Text style={styles.deleteSelectedButtonText}>
-                    {I18n.t('deleteSelected')}
-                  </Text>
-                )}
-              </TouchableOpacity>
-            )}
-          </>
+          <SwipeListView
+            data={componentsData}
+            renderItem={renderItem}
+            renderHiddenItem={renderHiddenItem}
+            rightOpenValue={-75}
+            disableRightSwipe
+            keyExtractor={item => item.id}
+            previewRowKey={'0'}
+            previewOpenValue={-40}
+            previewOpenDelay={3000}
+            closeOnRowPress={true}
+          />
         )}
       </ScrollView>
 
@@ -189,6 +229,8 @@ const ReceiptScreen = ({
           <Icon name="refresh" size={24} color="white" />
         </TouchableOpacity>
       </View>
+
+      {renderEditComponentScreen()}
     </SafeAreaView>
   );
 };
@@ -213,18 +255,7 @@ const styles = StyleSheet.create({
   componentContainer: {
     marginTop: 15,
   },
-  deleteSelectedButton: {
-    marginTop: 10,
-    backgroundColor: 'red',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    alignSelf: 'center',
-  },
-  deleteSelectedButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
+
   buttons: {
     flexDirection: 'row',
     position: 'absolute',
