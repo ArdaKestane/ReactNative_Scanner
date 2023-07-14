@@ -35,7 +35,6 @@ const WelcomeScreen = () => {
 
   const fetchRegistrationData = async () => {
     try {
-      // Retrieve registration data from AsyncStorage
       const data = await AsyncStorage.getItem('registrationData');
       if (data) {
         const parsedData = JSON.parse(data);
@@ -84,7 +83,6 @@ const WelcomeScreen = () => {
     };
 
     try {
-      // Retrieve existing registration data from AsyncStorage
       const data = await AsyncStorage.getItem('registrationData');
       let parsedData = [];
 
@@ -95,10 +93,8 @@ const WelcomeScreen = () => {
         }
       }
 
-      // Update registration data with new user
       parsedData.push(userData);
 
-      // Save updated registration data to AsyncStorage
       await AsyncStorage.setItem(
         'registrationData',
         JSON.stringify(parsedData),
@@ -249,9 +245,10 @@ const styles = StyleSheet.create({
   },
   background: {
     position: 'absolute',
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    left: 0,
+    top: 0,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
   contentContainer: {
     flex: 1,
