@@ -14,7 +14,11 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import I18n from '../I18n';
 import {useDispatch} from 'react-redux';
-import {setActiveScreen, setWelcomePageShown} from '../redux/action';
+import {
+  setActiveScreen,
+  setWelcomePageShown,
+  setGlobalUsername,
+} from '../redux/action';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -55,6 +59,8 @@ const WelcomeScreen = () => {
         );
         if (matchingUser) {
           dispatch(setWelcomePageShown(true));
+          dispatch(setGlobalUsername(matchingUser.username));
+          console.log(matchingUser.username, 'logged in successfully');
         } else {
           Alert.alert('Invalid credentials');
         }
@@ -136,14 +142,6 @@ const WelcomeScreen = () => {
             color="gray"
           />
         </TouchableOpacity>
-      </View>
-      <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={rememberMe}
-          onValueChange={setRememberMe}
-          style={styles.checkbox}
-        />
-        <Text style={styles.checkboxLabel}>Remember me</Text>
       </View>
       <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
         <Text style={styles.loginButtonText}>Login</Text>
@@ -320,7 +318,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 10,
+    marginTop: 20,
     alignItems: 'center',
     width: '100%',
   },

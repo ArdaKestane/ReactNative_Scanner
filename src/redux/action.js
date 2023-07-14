@@ -11,6 +11,7 @@ export const HANDLE_COMPONENT_PRESS = 'HANDLE_COMPONENT_PRESS';
 export const SAVE_DATA_SUCCESS = 'SAVE_DATA_SUCCESS';
 export const SAVE_DATA_ERROR = 'SAVE_DATA_ERROR';
 export const SAVE_COMPONENT = 'SAVE_COMPONENT';
+export const SET_USERNAME = 'SET_USERNAME';
 
 export const setActiveScreen = screen => ({
   type: SET_ACTIVE_SCREEN,
@@ -64,3 +65,10 @@ export const saveComponent = component => ({
   type: SAVE_COMPONENT,
   payload: component,
 });
+
+export const setGlobalUsername = username => {
+  return {
+    type: SET_USERNAME,
+    payload: username,
+  };
+};

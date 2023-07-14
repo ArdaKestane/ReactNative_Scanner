@@ -10,6 +10,7 @@ import {
   DELETE_COMPONENT,
   HANDLE_COMPONENT_PRESS,
   SAVE_COMPONENT,
+  SET_USERNAME,
 } from './action';
 
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
   selectedComponent: null,
   isWelcomePageShown: false,
   scannedImage: null,
+  username: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -115,6 +117,11 @@ const reducer = (state = initialState, action) => {
           selectedComponent: null, // Clear the selected component
         };
       }
+    case SET_USERNAME:
+      return {
+        ...state,
+        username: action.payload,
+      };
 
     default:
       return state;

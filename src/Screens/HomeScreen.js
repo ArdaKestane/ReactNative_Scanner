@@ -12,6 +12,7 @@ import I18n from '../I18n';
 import TransactionCard from '../Components/transactionCard';
 import {useSelector, useDispatch} from 'react-redux';
 import {setActiveScreen} from '../redux/action';
+import {setUsername} from '../redux/action';
 
 const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,7 @@ const HomeScreen = () => {
   const componentsData = useSelector(state => state.componentsData);
 
   const dispatch = useDispatch();
+  const username = useSelector(state => state.username);
 
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -68,7 +70,7 @@ const HomeScreen = () => {
       <Image style={styles.imageHeader} source={require('../Assets/top.png')} />
       <View style={styles.infoContainer}>
         <Text style={styles.heading}>
-          {I18n.t('greeting', {name: 'Arda Kestane'})}
+          {I18n.t('greeting', {name: username})}
         </Text>
 
         <View style={styles.amountContainer}>
