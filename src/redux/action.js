@@ -12,6 +12,7 @@ export const SAVE_DATA_SUCCESS = 'SAVE_DATA_SUCCESS';
 export const SAVE_DATA_ERROR = 'SAVE_DATA_ERROR';
 export const SAVE_COMPONENT = 'SAVE_COMPONENT';
 export const SET_USERNAME = 'SET_USERNAME';
+export const RESET_STATE = 'RESET_STATE';
 
 export const setActiveScreen = screen => ({
   type: SET_ACTIVE_SCREEN,
@@ -70,5 +71,11 @@ export const setGlobalUsername = username => {
   return {
     type: SET_USERNAME,
     payload: username,
+  };
+};
+
+export const resetState = () => {
+  return {
+    type: RESET_STATE,
   };
 };

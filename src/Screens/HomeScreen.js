@@ -8,11 +8,16 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  setActiveScreen,
+  setUsername,
+  resetState,
+  setWelcomePageShown,
+} from '../redux/action';
 import I18n from '../I18n';
 import TransactionCard from '../Components/transactionCard';
-import {useSelector, useDispatch} from 'react-redux';
-import {setActiveScreen} from '../redux/action';
-import {setUsername} from '../redux/action';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -22,7 +27,6 @@ const HomeScreen = () => {
   const [groceryAmount, setGroceryAmount] = useState(0);
   const [healthcareAmount, setHealthcareAmount] = useState(0);
   const componentsData = useSelector(state => state.componentsData);
-
   const dispatch = useDispatch();
   const username = useSelector(state => state.username);
 
@@ -65,8 +69,16 @@ const HomeScreen = () => {
     return () => clearTimeout(delay);
   }, [componentsData]);
 
+  const handleLogout = () => {
+    dispatch(resetState());
+    dispatch(setWelcomePageShown(false));
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+        <Icon name="log-out-outline" size={26} color="red" />
+      </TouchableOpacity>
       <Image style={styles.imageHeader} source={require('../Assets/top.png')} />
       <View style={styles.infoContainer}>
         <Text style={styles.heading}>
@@ -184,6 +196,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#9C8FE6',
     fontFamily: 'Ruda-Black',
+  },
+  logoutButton: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 20,
+    right: 10,
   },
 });
 

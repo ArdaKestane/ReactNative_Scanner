@@ -122,6 +122,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         username: action.payload,
       };
+    case 'RESET_STATE':
+      return initialState;
 
     default:
       return state;
