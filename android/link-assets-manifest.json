@@ -2,6 +2,18 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "src/Fonts/NunitoSans_7pt-BoldItalic.ttf",
+      "sha1": "dc3b2321fea566be992a9473879ba55ea13c223d"
+    },
+    {
+      "path": "src/Fonts/NunitoSans_7pt_Condensed-ExtraBoldItalic.ttf",
+      "sha1": "337eb2397f6af18c06d4c0b09b90f83ac74dcbca"
+    },
+    {
+      "path": "src/Fonts/NunitoSans_7pt_SemiExpanded-ExtraBold.ttf",
+      "sha1": "665a8192ef57388576cd142de143f89df905c3f5"
+    },
+    {
       "path": "src/Fonts/Ruda-Black.ttf",
       "sha1": "cbce3f609faf4b3c8c68e93fd3480e4629c98302"
     },

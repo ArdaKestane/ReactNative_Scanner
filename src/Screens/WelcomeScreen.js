@@ -14,21 +14,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import I18n from '../I18n';
 import {useDispatch} from 'react-redux';
-import {
-  setActiveScreen,
-  setWelcomePageShown,
-  setGlobalUsername,
-} from '../redux/action';
-import CheckBox from '@react-native-community/checkbox';
+import {setWelcomePageShown, setGlobalUsername} from '../redux/action';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const {height} = Dimensions.get('window');
-
-let marginTop = 50; // Default marginTop value for English text
-
-if (I18n.defaultLocale === 'tr') {
-  marginTop = 30;
-}
 
 const WelcomeScreen = () => {
   const dispatch = useDispatch();
@@ -74,7 +61,6 @@ const WelcomeScreen = () => {
     dispatch(setWelcomePageShown());
   }, [dispatch]);
 
-  const [rememberMe, setRememberMe] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -117,8 +103,9 @@ const WelcomeScreen = () => {
 
   const renderLoginForm = () => (
     <View style={styles.formContainer}>
+      <Text style={styles.loginHeader}>Login</Text>
       <View style={styles.formGroup}>
-        <Icon name="person" size={20} style={styles.inputIcon} />
+        <Icon name="text-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
           placeholder="Username"
@@ -126,7 +113,7 @@ const WelcomeScreen = () => {
         />
       </View>
       <View style={styles.formGroup}>
-        <Icon name="lock-closed" size={20} style={styles.inputIcon} />
+        <Icon name="lock-closed-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -137,8 +124,8 @@ const WelcomeScreen = () => {
           style={styles.passwordVisibilityIcon}
           onPress={togglePasswordVisibility}>
           <Icon
-            name={showPassword ? 'eye-off' : 'eye'}
-            size={20}
+            name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+            size={22}
             color="gray"
           />
         </TouchableOpacity>
@@ -146,13 +133,20 @@ const WelcomeScreen = () => {
       <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
+      <View style={styles.registerGroup}>
+        <Text style={styles.newText}>New around here?</Text>
+        <TouchableOpacity onPress={() => setIsLogin(false)}>
+          <Text style={styles.registerScreenButton}>Register</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
   const renderRegisterForm = () => (
     <View style={styles.formContainer}>
+      <Text style={styles.loginHeader}>Register</Text>
       <View style={styles.formGroup}>
-        <Icon name="person" size={20} style={styles.inputIcon} />
+        <Icon name="text-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
           placeholder="Username"
@@ -160,7 +154,7 @@ const WelcomeScreen = () => {
         />
       </View>
       <View style={styles.formGroup}>
-        <Icon name="lock-closed" size={20} style={styles.inputIcon} />
+        <Icon name="lock-closed-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -168,7 +162,7 @@ const WelcomeScreen = () => {
         />
       </View>
       <View style={styles.formGroup}>
-        <Icon name="mail" size={20} style={styles.inputIcon} />
+        <Icon name="mail-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -180,6 +174,12 @@ const WelcomeScreen = () => {
         onPress={saveRegistrationData}>
         <Text style={styles.registerButtonText}>Register</Text>
       </TouchableOpacity>
+      <View style={styles.loginGroup}>
+        <Text style={styles.newText}>Joined us before?</Text>
+        <TouchableOpacity onPress={() => setIsLogin(true)}>
+          <Text style={styles.registerScreenButton}>Login</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -205,26 +205,6 @@ const WelcomeScreen = () => {
               />
             </View>
             {isLogin ? renderLoginForm() : renderRegisterForm()}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.loginTabButton}
-                onPress={() => setIsLogin(true)}>
-                <Text
-                  style={isLogin ? styles.activeButtonText : styles.buttonText}>
-                  Login
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.registerTabButton}
-                onPress={() => setIsLogin(false)}>
-                <Text
-                  style={
-                    !isLogin ? styles.activeButtonText : styles.buttonText
-                  }>
-                  Register
-                </Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -265,17 +245,26 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   formContainer: {
-    marginTop: 20,
+    marginTop: 0,
     width: '100%',
   },
   formGroup: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    borderWidth: 1,
-    borderRadius: 10,
     paddingHorizontal: 10,
-    borderColor: 'grey',
+  },
+  loginHeader: {
+    fontSize: 32,
+    fontFamily: 'NunitoSans_7pt_SemiExpanded-ExtraBold',
+    color: 'black',
+    marginLeft: 10,
+    marginBottom: 20,
+  },
+  newText: {
+    fontSize: 14,
+    fontFamily: 'Ruda-Regular',
+    color: 'black',
   },
   inputIcon: {
     marginRight: 10,
@@ -284,6 +273,8 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray',
   },
   passwordVisibilityIcon: {
     position: 'absolute',
@@ -309,19 +300,34 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    marginHorizontal: 20,
+    marginTop: 10,
   },
   loginButtonText: {
     fontSize: 16,
-    fontFamily: 'Ruda-ExtraBold',
+    fontFamily: 'NunitoSans_7pt-BoldItalic',
     color: 'black',
   },
-  buttonContainer: {
+  registerGroup: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 20,
     alignItems: 'center',
-    width: '100%',
+    alignSelf: 'center',
+    marginTop: 20,
+    gap: 5,
   },
+  loginGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
+    gap: 5,
+  },
+  registerScreenButton: {
+    fontSize: 16,
+    fontFamily: 'NunitoSans_7pt_Condensed-ExtraBoldItalic',
+    color: 'black',
+  },
+
   loginTabButton: {
     paddingHorizontal: 20,
     flex: 1,
@@ -357,13 +363,14 @@ const styles = StyleSheet.create({
   registerButton: {
     height: 40,
     backgroundColor: '#9C8FE6',
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    marginHorizontal: 20,
   },
   registerButtonText: {
     fontSize: 16,
-    fontFamily: 'Ruda-ExtraBold',
+    fontFamily: 'NunitoSans_7pt-BoldItalic',
     color: 'white',
   },
 });

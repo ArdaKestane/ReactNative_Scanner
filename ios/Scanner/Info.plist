@@ -28,6 +28,9 @@
 		<string>Ruda-Medium.ttf</string>
 		<string>Ruda-Regular.ttf</string>
 		<string>Ruda-SemiBold.ttf</string>
+		<string>NunitoSans_7pt-BoldItalic.ttf</string>
+		<string>NunitoSans_7pt_Condensed-ExtraBoldItalic.ttf</string>
+		<string>NunitoSans_7pt_SemiExpanded-ExtraBold.ttf</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera to take photos and videos.</string>
