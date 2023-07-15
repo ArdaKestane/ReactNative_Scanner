@@ -21,12 +21,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const WelcomeScreen = () => {
   const dispatch = useDispatch();
 
-  const clearFields = () => {
-    setUsername('');
-    setPassword('');
-    setEmail('');
-  };
-
   useEffect(() => {
     fetchRegistrationData();
   }, []);
@@ -117,6 +111,7 @@ const WelcomeScreen = () => {
           style={styles.input}
           placeholder={I18n.t('username')}
           onChangeText={setUsername}
+          placeholderTextColor="grey"
         />
       </View>
       <View style={styles.formGroup}>
@@ -126,11 +121,13 @@ const WelcomeScreen = () => {
           placeholder={I18n.t('password')}
           secureTextEntry={!showPassword}
           onChangeText={setPassword}
+          placeholderTextColor="grey"
         />
         <TouchableOpacity
           style={styles.passwordVisibilityIcon}
           onPress={togglePasswordVisibility}>
           <Icon
+            style={styles.inputIcon}
             name={showPassword ? 'eye-off-outline' : 'eye-outline'}
             size={22}
             color="gray"
@@ -158,6 +155,7 @@ const WelcomeScreen = () => {
           style={styles.input}
           placeholder={I18n.t('username')}
           onChangeText={setUsername}
+          placeholderTextColor="grey"
         />
       </View>
       <View style={styles.formGroup}>
@@ -166,6 +164,7 @@ const WelcomeScreen = () => {
           style={styles.input}
           placeholder={I18n.t('password')}
           onChangeText={setPassword}
+          placeholderTextColor="grey"
         />
       </View>
       <View style={styles.formGroup}>
@@ -174,6 +173,7 @@ const WelcomeScreen = () => {
           style={styles.input}
           placeholder={I18n.t('email')}
           onChangeText={setEmail}
+          placeholderTextColor="grey"
         />
       </View>
       <TouchableOpacity
@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
   },
   inputIcon: {
     marginRight: 10,
+    color: 'black',
   },
   input: {
     flex: 1,
@@ -282,6 +283,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
+    color: 'black',
   },
   passwordVisibilityIcon: {
     position: 'absolute',
@@ -292,14 +294,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-  },
-  checkbox: {
-    marginRight: 5,
-  },
-  checkboxLabel: {
-    fontSize: 14,
-    fontFamily: 'Ruda-Regular',
-    color: 'black',
   },
   loginButton: {
     height: 40,
@@ -315,6 +309,11 @@ const styles = StyleSheet.create({
     fontFamily: 'NunitoSans_7pt-BoldItalic',
     color: 'black',
   },
+  registerScreenButton: {
+    fontSize: 16,
+    fontFamily: 'NunitoSans_7pt_Condensed-ExtraBoldItalic',
+    color: 'black',
+  },
   registerGroup: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -328,44 +327,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
     gap: 5,
-  },
-  registerScreenButton: {
-    fontSize: 16,
-    fontFamily: 'NunitoSans_7pt_Condensed-ExtraBoldItalic',
-    color: 'black',
-  },
-
-  loginTabButton: {
-    paddingHorizontal: 20,
-    flex: 1,
-    paddingVertical: 10,
-    backgroundColor: '#F2EAD3',
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-    height: 55,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  registerTabButton: {
-    paddingHorizontal: 20,
-    flex: 1,
-    height: 55,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
-    paddingVertical: 10,
-    backgroundColor: '#DFD7BF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-    fontFamily: 'Ruda-Regular',
-    color: 'black',
-  },
-  activeButtonText: {
-    fontSize: 16,
-    fontFamily: 'Ruda-Black',
-    color: 'black',
   },
   registerButton: {
     height: 40,

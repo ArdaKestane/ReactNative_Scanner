@@ -174,11 +174,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Ruda-Black',
     marginBottom: 8,
+    color: 'black',
   },
   value: {
     fontSize: 14,
     fontFamily: 'Ruda-Regular',
     marginBottom: 16,
+    color: 'black',
   },
   input: {
     borderWidth: 1,
@@ -187,6 +189,7 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 16,
     fontFamily: 'Ruda-Regular',
+    color: 'grey',
   },
   dropdownContainer: {
     height: 40,
@@ -239,6 +242,7 @@ const styles = StyleSheet.create({
   textInput: {
     padding: 8,
     fontFamily: 'Ruda-Regular',
+    color: 'grey',
   },
   imageModalContainer: {
     flex: 1,

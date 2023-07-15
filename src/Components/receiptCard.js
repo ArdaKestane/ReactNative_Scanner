@@ -75,30 +75,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
     fontFamily: 'Ruda-ExtraBold',
+    color: 'black',
   },
   value: {
     fontFamily: 'Ruda-Regular',
   },
-  deleteButton: {
-    borderRadius: 5,
-    padding: 5,
-    backgroundColor: 'red',
-  },
-  deleting: {
-    backgroundColor: 'red',
-    borderRadius: 5,
-    padding: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });
 
-const mapStateToProps = state => ({
-  deleting: state.deleting,
-});
-
-const mapDispatchToProps = {
-  onDelete: deleteComponent,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReceiptCard);
+export default ReceiptCard;
