@@ -21,6 +21,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const WelcomeScreen = () => {
   const dispatch = useDispatch();
 
+  const clearFields = () => {
+    setUsername('');
+    setPassword('');
+    setEmail('');
+  };
+
   useEffect(() => {
     fetchRegistrationData();
   }, []);
@@ -50,17 +56,17 @@ const WelcomeScreen = () => {
           dispatch(setGlobalUsername(matchingUser.username));
           console.log(matchingUser.username, 'logged in successfully');
         } else {
-          Alert.alert('Invalid credentials');
+          Alert.alert(
+            'Invalid credentials',
+            'Please check your username and password.',
+            [{text: 'OK'}],
+          );
         }
       }
     } catch (error) {
       console.log('Error retrieving registration data:', error);
     }
   };
-
-  useEffect(() => {
-    dispatch(setWelcomePageShown());
-  }, [dispatch]);
 
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
@@ -74,7 +80,6 @@ const WelcomeScreen = () => {
       password,
       email,
     };
-
     try {
       const data = await AsyncStorage.getItem('registrationData');
       let parsedData = [];
@@ -93,6 +98,7 @@ const WelcomeScreen = () => {
         JSON.stringify(parsedData),
       );
       console.log('Registration data saved successfully');
+      setIsLogin(true);
     } catch (error) {
       console.log('Error saving registration data:', error);
     }
@@ -104,12 +110,12 @@ const WelcomeScreen = () => {
 
   const renderLoginForm = () => (
     <View style={styles.formContainer}>
-      <Text style={styles.loginHeader}>Login</Text>
+      <Text style={styles.loginHeader}>{I18n.t('login')}</Text>
       <View style={styles.formGroup}>
         <Icon name="text-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
-          placeholder="Username"
+          placeholder={I18n.t('username')}
           onChangeText={setUsername}
         />
       </View>
@@ -117,7 +123,7 @@ const WelcomeScreen = () => {
         <Icon name="lock-closed-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
-          placeholder="Password"
+          placeholder={I18n.t('password')}
           secureTextEntry={!showPassword}
           onChangeText={setPassword}
         />
@@ -132,12 +138,12 @@ const WelcomeScreen = () => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
-        <Text style={styles.loginButtonText}>Login</Text>
+        <Text style={styles.loginButtonText}>{I18n.t('login')}</Text>
       </TouchableOpacity>
       <View style={styles.registerGroup}>
-        <Text style={styles.newText}>New around here?</Text>
+        <Text style={styles.newText}>{I18n.t('newAroundHere')}</Text>
         <TouchableOpacity onPress={() => setIsLogin(false)}>
-          <Text style={styles.registerScreenButton}>Register</Text>
+          <Text style={styles.registerScreenButton}>{I18n.t('register')}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -145,12 +151,12 @@ const WelcomeScreen = () => {
 
   const renderRegisterForm = () => (
     <View style={styles.formContainer}>
-      <Text style={styles.loginHeader}>Register</Text>
+      <Text style={styles.loginHeader}>{I18n.t('register')}</Text>
       <View style={styles.formGroup}>
         <Icon name="text-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
-          placeholder="Username"
+          placeholder={I18n.t('username')}
           onChangeText={setUsername}
         />
       </View>
@@ -158,7 +164,7 @@ const WelcomeScreen = () => {
         <Icon name="lock-closed-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
-          placeholder="Password"
+          placeholder={I18n.t('password')}
           onChangeText={setPassword}
         />
       </View>
@@ -166,19 +172,19 @@ const WelcomeScreen = () => {
         <Icon name="mail-outline" size={20} style={styles.inputIcon} />
         <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder={I18n.t('email')}
           onChangeText={setEmail}
         />
       </View>
       <TouchableOpacity
         style={styles.registerButton}
         onPress={saveRegistrationData}>
-        <Text style={styles.registerButtonText}>Register</Text>
+        <Text style={styles.registerButtonText}>{I18n.t('register')}</Text>
       </TouchableOpacity>
       <View style={styles.loginGroup}>
-        <Text style={styles.newText}>Joined us before?</Text>
+        <Text style={styles.newText}>{I18n.t('joinedUsBefore')}</Text>
         <TouchableOpacity onPress={() => setIsLogin(true)}>
-          <Text style={styles.registerScreenButton}>Login</Text>
+          <Text style={styles.registerScreenButton}>{I18n.t('login')}</Text>
         </TouchableOpacity>
       </View>
     </View>

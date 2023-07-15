@@ -1,8 +1,4 @@
 export default {
-  organizeSave: 'Organize & save \nall your receipts',
-  documentPayments:
-    'Document all your payments and \nreceipts easily and simply.',
-  letsStart: "Let's start!",
   greeting: 'Hi, {{name}}',
   spent: 'Spent',
   withTotalOf: 'With a total of {totalReceipts}',
@@ -30,4 +26,11 @@ export default {
   grocery: 'Grocery',
   healthcare: 'Healthcare',
   mockComponent: 'Mock component',
+  login: 'Login',
+  username: 'Username',
+  password: 'Password',
+  email: 'Email',
+  newAroundHere: 'New around here?',
+  register: 'Register',
+  joinedUsBefore: 'Joined us before?',
 };
