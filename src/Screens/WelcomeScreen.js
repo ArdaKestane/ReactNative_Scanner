@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   ScrollView,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import I18n from '../I18n';
@@ -187,8 +188,8 @@ const WelcomeScreen = () => {
     <View style={{flex: 1}}>
       <KeyboardAvoidingView
         style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'position' : null}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 70}>
+        behavior={Platform.OS === 'IOS' ? 'position' : null}
+        keyboardVerticalOffset={Platform.OS === 'IOS' ? 50 : 70}>
         <ScrollView
           style={{flex: 1}}
           contentContainerStyle={styles.scrollContainer}
